@@ -31,7 +31,7 @@ d = Node(0, 50, 50, 0, 0)
 
 all_nodes.append(d) 
 
-birthday = 5112001 
+birthday = 3112000 
 
 random.seed(birthday)
 
