@@ -35,11 +35,12 @@ class Model:
                 self.matrix[i][j] = dist
 
 class Node:
-    def __init__(self, idd, xx, yy, dem):
+    def __init__(self, idd, xx, yy, service_time, profit):
         self.x = xx
         self.y = yy
         self.ID = idd
-        self.demand = dem
+        self.service_time = service_time
+        self.profit = profit
         self.isRouted = False
 
 class Route:
