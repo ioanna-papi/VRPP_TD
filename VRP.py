@@ -21,34 +21,11 @@ class Model:
             profit = random.randint(5, 20)
             cust = Node(i + 1, xx, yy, service_time, profit)
             allNodes.append(cust)
-
+            customers.append(cust)
             
  
 
-class Model:
-
-# instance variables
-    def __init__(self):
-        self.allNodes = []
-        self.customers = []
-        self.matrix = []
-        self.capacity = -1
-
-    def BuildModel(self):
-        random.seed(1)
-        depot = Node(0, 50, 50, 0)
-        self.allNodes.append(depot)
-
-        self.capacity = 50
-        totalCustomers = 120
-
-        for i in range (0, totalCustomers):
-            x = random.randint(0, 100)
-            y = random.randint(0, 100)
-            dem = random.randint(1, 4)
-            cust = Node(i + 1, x, y, dem)
-            self.allNodes.append(cust)
-            self.customers.append(cust)
+   
 
         rows = len(self.allNodes)
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
