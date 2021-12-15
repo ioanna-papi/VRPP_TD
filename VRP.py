@@ -27,7 +27,7 @@ class Model:
 
    
 
-        rows = len(self.allNodes)
+        rows = 200
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
 
         for i in range(0, len(self.allNodes)):
