@@ -23,11 +23,8 @@ class Model:
             allNodes.append(cust)
             customers.append(cust)
             
- 
 
-   
-
-        rows = 200
+        rows = len(self.allNodes)
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
 
         for i in range(0, len(self.allNodes)):
