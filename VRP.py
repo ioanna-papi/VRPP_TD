@@ -48,6 +48,8 @@ class Route:
         self.sequenceOfNodes = []
         self.sequenceOfNodes.append(dp)
         self.sequenceOfNodes.append(dp)
+        // γιατι προσθετει 2 φορες το dp στη λιστα;
+        // πρεπει στη λιστα να προσθετουμε και time, profit;
         self.cost = 0
         self.service_time = service_time
         self.profit = profit
