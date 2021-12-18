@@ -12,6 +12,7 @@ class Model:
         allNodes = []
         d = Node(0, 50, 50, 0, 0)
         allNodes.append(d)
+        # birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
         for i in range(0, 200):
