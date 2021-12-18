@@ -55,3 +55,7 @@ class Route:
         self.service_time = service_time
         self.profit = profit
         self.load = 0
+        self.time = 0
+        self.dist = 0
+        
+        
