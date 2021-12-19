@@ -49,7 +49,7 @@ class Route:
     def __init__(self, dp, time_limit):
         self.sequenceOfNodes = []
         self.sequenceOfNodes.append(dp)
-        # πρεπει στη λιστα να προσθετουμε και time, profit;
+        # να αρχικοποιώ το time_limit στο VRP ή στο SOLVER;
         self.cost = 0
         self.time_limit = time_limit
         self.load = 0
