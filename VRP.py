@@ -48,7 +48,7 @@ class Route:
     def __init__(self, dp, service_time, profit):
         self.sequenceOfNodes = []
         self.sequenceOfNodes.append(dp)
-        // πρεπει στη λιστα να προσθετουμε και time, profit;
+        # πρεπει στη λιστα να προσθετουμε και time, profit;
         self.cost = 0
         self.service_time = service_time
         self.profit = profit
