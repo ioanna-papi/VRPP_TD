@@ -1,4 +1,4 @@
-#from TSP_Model import Model
+#from VRP_Model import Model
 from Solver import *
 
 m = Model()
