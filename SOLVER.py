@@ -81,5 +81,6 @@ class Solver:
         self.sol = None
         self.bestSolution = None
         
+     def    
         
         
