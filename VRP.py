@@ -46,10 +46,8 @@ class Node:
         self.isRouted = False
 
 class Route:
-    def __init__(self, dp, time_limit):
+    def __init__(self, time_limit):
         self.sequenceOfNodes = []
-        self.sequenceOfNodes.append(dp)
-        # να αρχικοποιώ το time_limit στο VRP ή στο SOLVER;
         self.cost = 0
         self.time_limit = time_limit
         self.load = 0
