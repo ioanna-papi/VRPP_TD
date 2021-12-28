@@ -73,4 +73,13 @@ class TwoOptMove(object):
 
 class Solver:
     
-    
+    def __init__(self, m):
+        self.allNodes = m.allNodes
+        self.customers = m.customers
+        self.depot = m.allNodes[0]
+        self.distanceMatrix = m.matrix
+        self.sol = None
+        self.bestSolution = None
+        
+        
+        
