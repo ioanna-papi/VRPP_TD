@@ -15,7 +15,7 @@ class Model:
         # birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
-        total_time = 0
+        total_route_time = 0
         for i in range(0, 200):
             xx = random.randint(0, 100)
             yy = random.randint(0, 100)
@@ -46,10 +46,10 @@ class Node:
         self.isRouted = False
 
 class Route:
-    def __init__(self, total_time):
+    def __init__(self, total_route_time):
         self.sequenceOfNodes = []
         self.cost = 0
-        self.total_time = total_time
+        self.total_route_time = total_route_time
         self.load = 0
         self.time = 0
         self.dist = 0
