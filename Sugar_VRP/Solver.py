@@ -1,5 +1,5 @@
-from VRP_Model import*
-from SolutionDrawer import*
+from VRP_Model import *
+from SolutionDrawer import *
 
 class Solution:
     def __init__(self):
