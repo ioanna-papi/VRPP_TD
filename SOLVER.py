@@ -89,13 +89,21 @@ class Solver:
             self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
             total_route_profit[r] = 0
-            marginal_profit = []
+            marginal_profit = [][]
             
             while (total_route_time <= 150 and (total_route_profit + marginal_profit[i]) >= 0):
                 
-                for i in range(len(self.allNodes)):
-                     for j in range(len(self.allNodes)):
-                            marginal_profit[i] = m.allNodes[i].profit - 
+                for j in range(len(self.allNodes)):
+                    for k in range(len(self.allNodes)):
+                         sort (self.distanceMatrix[j][k])
+                    
+                    
+                    for i in range(len(self.allNodes)):
+                    total_time1 = self.allNodes[i].service_time + self.distanceMatrix[i-1][i]       
+                    total_time2 = self.allNodes[i+1].service_time + self.distanceMatrix[i][i+1] 
+                    total_time3 = self.distanceMatrix[i-1][i+1]
+                    marginal_profit[i] = self.allNodes[i].profit - total_time1  - total_time2 + total_time3
+                                
                             
             
             
