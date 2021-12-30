@@ -99,6 +99,7 @@ class Solver:
             while total_route_time <= 150:
                 max1 = -10000000
                 flag = False
+                
                 for i in range(len(self.allNodes)):
                     if self.allNodes[i].isRouted == False:
                         flag = True
@@ -107,9 +108,22 @@ class Solver:
                             position = i
                 if not flag:
                     break
-                 
                     
+                elif (total_route_time + (self.distanceMatrix[node][position] +  self.allNodes[position].service_time) <= 150):
+                    self.route.sequenceOfNodes.append(self.allNodes[position])
+                    self.allNodes[position].isRouted = True
+                    a = self.allNodes[position]
                     
+                    total_route_time += (self.distanceMatrix[node][position] +  self.allNodes[position].service_time)
+                    total_route_profit[r] += self.allNodes[position].profit
+                    node = position
+                else:
+                    break 
+                    
+                
+                self.route.time = total_route_time
+                self.sol.routes.append(self.route)
+                self.sol.profit += total_route_profit[r]
                   
                             
             
