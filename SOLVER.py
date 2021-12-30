@@ -2,7 +2,7 @@ from VRP import *
 
 class Solution:
     def __init__(self):
-        self.dist = 0.0
+        self.profit = 0
         self.routes = []
         
 class RelocationMove(object):
@@ -82,12 +82,10 @@ class Solver:
         self.sol = None
         self.bestSolution = None
         
-     def ApplyNearestNeighborMethod(self):
+     def ApplyBestNodeMethod(self):
         
         for r in range(5):
             total_route_time = Route(0)
-            self.route.sequenceOfNodes.append(self.allNodes[0])
-            self.allNodes[0].isRouted = True
             total_route_profit[r] = 0
                
             node = 0
