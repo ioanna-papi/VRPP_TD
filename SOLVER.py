@@ -78,9 +78,27 @@ class Solver:
         self.customers = m.customers
         self.depot = m.allNodes[0]
         self.distanceMatrix = m.matrix
+        self.total_route_time = m.total_route_time
         self.sol = None
         self.bestSolution = None
         
-     def    
+     def ApplyNearestNeighborMethod(self):
         
+        for r in range(5):
+            total_route_time = Route(0)
+            self.route.sequenceOfNodes.append(self.allNodes[0])
+            self.allNodes[0].isRouted = True
+            total_route_profit[r] = 0
+            marginal_profit = []
+            
+            while (total_route_time <= 150 and (total_route_profit + marginal_profit[i]) >= 0):
+                
+                for i in range(len(self.allNodes)):
+                     for j in range(len(self.allNodes)):
+                            marginal_profit[i] = m.allNodes[i].profit - 
+                            
+            
+            
+            
+            
         
