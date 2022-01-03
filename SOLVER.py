@@ -135,21 +135,21 @@ class Solver:
         SolDrawer.draw('BestNode8180099', self.sol, self.allNodes)
         return (self.sol)                  
             
-        ## method that calculates the total time of the solution given
+        ## method that calculates the total profit of the solution given (total profit - total cost of routed nodes)
         def objective(self, solution):
-        total_time = 0
-        single_time = []
+        total_profit = 0
+        single_profit = []
         for i in range(len(solution.routes)):
             time = 0
             rout: Route = solution.routes[i]
             for j in range(len(rout.sequenceOfNodes) - 1):
                 index1 = rout.sequenceOfNodes[j]
                 index2 = rout.sequenceOfNodes[j + 1]
-                time += (self.allNodes[index2.ID].service_time + self.distanceMatrix[index1.ID][index2.ID])
-            single_time.append(time)
-            self.sol.routes[i].distance = time
-            total_time += time
-        return total_time   
+                profit += (self.allNodes[index2.ID].profit - (self.allNodes[index2.ID].service_time + self.distanceMatrix[index1.ID][index2.ID]))
+            single_profit.append(profit)
+            self.sol.routes[i].profit = profit
+            total_profit += profit
+        return total_profit   
             
             
         
