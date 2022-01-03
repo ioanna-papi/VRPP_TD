@@ -120,9 +120,36 @@ class Solver:
                 self.sol.routes.append(self.route)
                 self.sol.profit += total_route_profit[r]
                   
-                            
+        f = open("BestNode8180099.txt", "w+")
+        for i in range(len(self.sol.routes)):
+            rt: Route = self.sol.routes[i]
+            f.write("This is route: \n")
+            for j in range(len(rt.sequenceOfNodes)):
+                print(rt.sequenceOfNodes[j].ID, end=' ', )
+                f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
+            f.write("\n")
+            print("\n")
+        solution = self.objective(self.sol)
+        f.write("This is the final objective: %d" % (solution))
+        f.close()
+        SolDrawer.draw('BestNode8180099', self.sol, self.allNodes)
+        return (self.sol)                  
             
-            
+        ## method that calculates the total time of the solution given
+        def objective(self, solution):
+        total_time = 0
+        single_time = []
+        for i in range(len(solution.routes)):
+            time = 0
+            rout: Route = solution.routes[i]
+            for j in range(len(rout.sequenceOfNodes) - 1):
+                index1 = rout.sequenceOfNodes[j]
+                index2 = rout.sequenceOfNodes[j + 1]
+                time += (self.allNodes[index2.ID].service_time + self.distanceMatrix[index1.ID][index2.ID])
+            single_time.append(time)
+            self.sol.routes[i].distance = time
+            total_time += time
+        return total_time   
             
             
         
