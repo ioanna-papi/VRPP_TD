@@ -73,7 +73,13 @@ class Solver:
         self.sol = Solution()
         self.bestSolution = Solution()
         self.route = None
-        
+    
+    def solve(self):
+        self.ApplyBestNodeMethod()
+        self.objective(self.sol)
+        return self.sol
+    
+    
     def ApplyBestNodeMethod(self):
         
         for r in range(5):
