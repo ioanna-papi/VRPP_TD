@@ -11,7 +11,7 @@ class Model:
     def BuildModel(self):
         allNodes = []
         d = Node(0, 50, 50, 0, 0)
-        allNodes[0] = d
+        allNodes[0] = Node(0, 50, 50, 0, 0)
         # birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
