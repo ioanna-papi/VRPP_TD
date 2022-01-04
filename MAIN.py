@@ -1,4 +1,3 @@
-from VRP import *
 from SOLVER import *
 
 m = Model()
