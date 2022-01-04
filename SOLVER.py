@@ -68,12 +68,11 @@ class Solver:
         self.timeMatrix = m.time
         self.total_route_time = 0
         self.total_route_profit = 0
-        self.sol = None
-        self.bestSolution = None
+        self.sol = Solution()
+        self.bestSolution = Solution()
         self.route = None
     
     def solve(self):
-        self.ApplyBestNodeMethod()
         self.objective(self.sol)
         return self.sol
     
