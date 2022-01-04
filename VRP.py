@@ -22,10 +22,10 @@ class Model:
             profit = random.randint(5, 20)
             cust = Node(i + 1, xx, yy, service_time, profit)
             self.allNodes.append(cust)
-            print(self.allNodes[i])
+            #print(self.allNodes[i])
             
-        for j in range(0,200):
-            print(self.allNodes[j])
+        #for j in range(0,200):
+            #print(self.allNodes[j])
             
         rows = len(self.allNodes)
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
