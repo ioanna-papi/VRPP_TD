@@ -44,18 +44,6 @@ class SwapMove(object):
         self.moveCost = 10 ** 9
 
 
-class CustomerInsertion(object):
-    def __init__(self):
-        self.customer = None
-        self.route = None
-        self.cost = 10 ** 9
-
-class CustomerInsertionAllPositions(object):
-    def __init__(self):
-        self.customer = None
-        self.route = None
-        self.insertionPosition = None
-        self.cost = 10 ** 9
 
 class TwoOptMove(object):
     def __init__(self):
@@ -82,6 +70,9 @@ class Solver:
         self.total_route_profit = 0
         self.sol = None
         self.bestSolution = None
+        self.sol = Solution()
+        self.bestSolution = Solution()
+        self.route = None
         
     def ApplyBestNodeMethod(self):
         
