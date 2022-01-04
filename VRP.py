@@ -25,7 +25,7 @@ class Model:
             #print(str(self.allNodes[i]))
             
         
-        print(self.allNodes[0].idd)
+        print(self.allNodes[0].ID)
             
         rows = len(self.allNodes)
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
