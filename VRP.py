@@ -9,7 +9,7 @@ class Model:
         self.matrix = []
 
     def BuildModel(self):
-        self.allNodes = []
+        self.allNodes = list()
         d = Node(0, 50, 50, 0, 0)
         self.allNodes.append(Node(0, 50, 50, 0, 0))
         # birthday = 03/11/2000
