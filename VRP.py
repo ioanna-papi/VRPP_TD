@@ -24,7 +24,7 @@ class Model:
             cust = Node(i + 1, xx, yy, service_time, profit)
             self.allNodes.append(cust)
             
-         print(str(self.allNodes[0]))
+         print(self.allNodes[1])
         
 
         rows = len(self.allNodes)
