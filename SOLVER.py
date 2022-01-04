@@ -137,19 +137,19 @@ class Solver:
             
         ## method that calculates the total profit of the solution given (total revenue - total cost of routed nodes)
         def objective(self, solution):
-        total_profit = 0
-        single_profit = []
-        for i in range(len(solution.routes)):
-            time = 0
-            rout: Route = solution.routes[i]
-            for j in range(len(rout.sequenceOfNodes) - 1):
-                index1 = rout.sequenceOfNodes[j]
-                index2 = rout.sequenceOfNodes[j + 1]
-                profit += (self.allNodes[index2.ID].profit - (self.allNodes[index2.ID].service_time + self.distanceMatrix[index1.ID][index2.ID]))
-            single_profit.append(profit)
-            self.sol.routes[i].profit = profit
-            total_profit += profit
-        return total_profit   
+            total_profit = 0
+            single_profit = []
+            for i in range(len(solution.routes)):
+                time = 0
+                rout: Route = solution.routes[i]
+                for j in range(len(rout.sequenceOfNodes) - 1):
+                    index1 = rout.sequenceOfNodes[j]
+                    index2 = rout.sequenceOfNodes[j + 1]
+                    profit += (self.allNodes[index2.ID].profit - (self.allNodes[index2.ID].service_time + self.distanceMatrix[index1.ID][index2.ID]))
+                single_profit.append(profit)
+                self.sol.routes[i].profit = profit
+                total_profit += profit
+            return total_profit   
             
             
         
