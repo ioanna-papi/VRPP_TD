@@ -64,7 +64,7 @@ class Solver:
     def __init__(self, m):
         self.allNodes = m.allNodes
         self.customers = m.customers
-        self.depot = m.allNodes[:1]
+        self.depot = m.allNodes[0]
         self.distanceMatrix = m.matrix
         self.total_route_time = 0
         self.total_route_profit = 0
