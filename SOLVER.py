@@ -115,20 +115,7 @@ class Solver:
                 self.sol.routes.append(self.route)
                 self.sol.profit += total_route_profit
                   
-        f = open("BestNode8180099.txt", "w+")
-        for i in range(len(self.sol.routes)):
-            rt: Route = self.sol.routes[i]
-            f.write("This is route: \n")
-            for j in range(len(rt.sequenceOfNodes)):
-                print(rt.sequenceOfNodes[j].ID, end=' ', )
-                f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
-            f.write("\n")
-            print("\n")
-        solution = self.objective(self.sol)
-        f.write("This is the final objective: %d" % (solution))
-        f.close()
-        SolDrawer.draw('BestNode8180099', self.sol, self.allNodes)
-        return (self.sol)                  
+                          
             
         ## method that calculates the total profit of the solution given (total revenue - total cost of routed nodes)
         def objective(self, solution):
