@@ -73,7 +73,8 @@ class Solver:
         self.route = None
     
     def solve(self):
-        self.objective(self.sol)
+        self.ApplyBestNodeMethod()
+        self.ObjectiveFunction(self.sol)
         return self.sol
     
     
@@ -121,7 +122,7 @@ class Solver:
                           
             
         ## method that calculates the total profit of the solution given (total revenue - total cost of routed nodes)
-        def objective(self, solution):
+        def ObjectiveFunction(self, solution):
             total_profit = 0
             single_profit = []
             for i in range(len(solution.routes)):
