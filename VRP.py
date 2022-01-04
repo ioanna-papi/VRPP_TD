@@ -9,9 +9,9 @@ class Model:
         self.matrix = []
 
     def BuildModel(self):
-        self.allNodes = []
+        allNodes = []
         d = Node(0, 50, 50, 0, 0)
-        self.allNodes.append(d)
+        allNodes.append(Node(0, 50, 50, 0, 0))
         # birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
@@ -22,7 +22,7 @@ class Model:
             service_time = random.randint(5, 10)
             profit = random.randint(5, 20)
             cust = Node(i + 1, xx, yy, service_time, profit)
-            self.allNodes.append(cust)
+            allNodes.append(cust)
             
 
         rows = len(self.allNodes)
