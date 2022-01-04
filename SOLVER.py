@@ -80,7 +80,7 @@ class Solver:
             total_route_time = Route(0)
                
             node = 0
-            self.route.sequenceOfNodes.append(self.allNodes[:1])
+            self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
             total_time = 0
             position = 0
