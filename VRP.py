@@ -25,7 +25,7 @@ class Model:
             self.allNodes.append(cust)
             print(self.allNodes[i])
             
-        for j in range(len(allNodes)):
+        for j in range(len(self.allNodes)):
             print(self.allNodes[j])
             
         rows = len(self.allNodes)
