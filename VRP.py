@@ -23,7 +23,6 @@ class Model:
             profit = random.randint(5, 20)
             cust = Node(i + 1, xx, yy, service_time, profit)
             allNodes.append(cust)
-            customers.append(cust)
             
 
         rows = len(self.allNodes)
