@@ -47,10 +47,11 @@ class Node:
         self.isRouted = False
 
 class Route:
-    def __init__(self, total_route_time):
+    def __init__(self, total_route_time, total_route_profit):
         self.sequenceOfNodes = []
         self.cost = 0
         self.total_route_time = total_route_time
+        self.total_route_profit = total_route_profit
         self.load = 0
         self.time = 0
         self.dist = 0
