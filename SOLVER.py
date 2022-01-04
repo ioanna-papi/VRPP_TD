@@ -101,7 +101,7 @@ class Solver:
                     a = self.allNodes[position]
                     
                     total_route_time += (self.distanceMatrix[node][position] +  self.allNodes[position].service_time)
-                    total_route_profit += self.allNodes[position].profit
+                    self.total_route_profit += self.allNodes[position].profit
                     node = position
                 else:
                     break 
@@ -109,7 +109,7 @@ class Solver:
                 
                 self.route.time = total_route_time
                 self.sol.routes.append(self.route)
-                self.sol.profit += total_route_profit[r]
+                self.sol.profit += self.total_route_profit[r]
                   
         f = open("BestNode8180099.txt", "w+")
         for i in range(len(self.sol.routes)):
