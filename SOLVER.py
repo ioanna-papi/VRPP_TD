@@ -78,7 +78,7 @@ class Solver:
         self.customers = m.customers
         self.depot = m.allNodes[:1]
         self.distanceMatrix = m.matrix
-        self.total_route_time = m.total_route_time
+        self.total_route_time = 0
         self.sol = None
         self.bestSolution = None
         
