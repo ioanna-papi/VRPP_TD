@@ -79,7 +79,7 @@ class Solver:
         self.depot = m.allNodes[:1]
         self.distanceMatrix = m.matrix
         self.total_route_time = 0
-        self.total_route_profit = []
+        self.total_route_profit = 0
         self.sol = None
         self.bestSolution = None
         
@@ -87,7 +87,6 @@ class Solver:
         
         for r in range(5):
             total_route_time = Route(0)
-            total_route_profit[r] = 0
                
             node = 0
             self.route.sequenceOfNodes.append(self.allNodes[0])
@@ -111,7 +110,7 @@ class Solver:
                     a = self.allNodes[position]
                     
                     total_route_time += (self.distanceMatrix[node][position] +  self.allNodes[position].service_time)
-                    total_route_profit[r] += self.allNodes[position].profit
+                    total_route_profit += self.allNodes[position].profit
                     node = position
                 else:
                     break 
