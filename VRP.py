@@ -9,9 +9,9 @@ class Model:
         self.matrix = []
 
     def BuildModel(self):
-        self.allNodes = list()
+        
         d = Node(0, 50, 50, 0, 0)
-        self.allNodes.append(Node(0, 50, 50, 0, 0))
+        self.allNodes.append(d)
         # birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
