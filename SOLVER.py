@@ -74,6 +74,7 @@ class Solver:
     
     def solve(self):
         self.ApplyBestNodeMethod()
+        self.sol = Solution()
         self.ObjectiveFunction(self.sol)
         return self.sol
     
