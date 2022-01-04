@@ -135,7 +135,7 @@ class Solver:
         SolDrawer.draw('BestNode8180099', self.sol, self.allNodes)
         return (self.sol)                  
             
-        ## method that calculates the total profit of the solution given (total profit - total cost of routed nodes)
+        ## method that calculates the total profit of the solution given (total revenue - total cost of routed nodes)
         def objective(self, solution):
         total_profit = 0
         single_profit = []
