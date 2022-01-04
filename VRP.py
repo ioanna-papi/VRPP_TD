@@ -25,7 +25,9 @@ class Model:
             self.allNodes.append(cust)
             print(self.allNodes[i])
             
-        
+        for i in range(0, 200):
+            print(self.allNodes[i])
+            
         rows = len(self.allNodes)
         self.matrix = [[0.0 for x in range(rows)] for y in range(rows)]
 
