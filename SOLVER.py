@@ -79,6 +79,7 @@ class Solver:
         for r in range(5):
             self.route = Route(200)
             total_route_time = 0
+            total_route_profit = 0
             node = 0
             self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
@@ -101,7 +102,7 @@ class Solver:
                     a = self.allNodes[position]
                     
                     total_route_time += (self.distanceMatrix[node][position] +  self.allNodes[position].service_time)
-                    self.total_route_profit += self.allNodes[position].profit
+                    total_route_profit += self.allNodes[position].profit
                     node = position
                 else:
                     break 
@@ -109,7 +110,7 @@ class Solver:
                 
                 self.route.time = total_route_time
                 self.sol.routes.append(self.route)
-                self.sol.profit += self.total_route_profit
+                self.sol.profit += total_route_profit
                   
         f = open("BestNode8180099.txt", "w+")
         for i in range(len(self.sol.routes)):
