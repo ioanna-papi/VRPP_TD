@@ -63,9 +63,9 @@ class Solver:
     
     def __init__(self, m):
         self.allNodes = m.allNodes
-        self.customers = m.customers
         self.depot = m.allNodes[0]
         self.distanceMatrix = m.matrix
+        self.timeMatrix = m.time
         self.total_route_time = 0
         self.total_route_profit = 0
         self.sol = None
@@ -77,8 +77,8 @@ class Solver:
     def ApplyBestNodeMethod(self):
         
         for r in range(5):
+            self.route = Route(200)
             total_route_time = Route(0)
-               
             node = 0
             self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
