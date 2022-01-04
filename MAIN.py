@@ -2,7 +2,7 @@
 from VRP import *
 
 m = Model()
-m.BuildModel(m)
+BuildModel(m)
 #s = Solver(m)
 #print("Best Node")
 #solution = s.ApplyBestNodeMethod()
