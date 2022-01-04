@@ -82,7 +82,7 @@ class Solver:
         self.sol = None
         self.bestSolution = None
         
-     def ApplyBestNodeMethod(self):
+    def ApplyBestNodeMethod(self):
         
         for r in range(5):
             total_route_time = Route(0)
