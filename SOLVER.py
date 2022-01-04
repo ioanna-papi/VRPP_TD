@@ -70,8 +70,6 @@ class Solver:
         self.total_route_profit = 0
         self.sol = None
         self.bestSolution = None
-        self.sol = Solution()
-        self.bestSolution = Solution()
         self.route = None
     
     def solve(self):
