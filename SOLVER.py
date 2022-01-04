@@ -117,6 +117,7 @@ class Solver:
                     
                 
                 self.route.time = total_route_time
+                self.route.profit = total_route_profit
                 self.sol.routes.append(self.route)
                 self.sol.profit += total_route_profit
                   
@@ -129,6 +130,9 @@ class Solver:
         for i in range(len(solution.routes)):
             time = 0
             rout: Route = solution.routes[i]
+            for j in range (0, len(rt.sequenceOfNodes)):
+                print(rt.sequenceOfNodes[j].ID, end=' ')
+            print(rout.profit)    
             for j in range(len(rout.sequenceOfNodes) - 1):
                 index1 = rout.sequenceOfNodes[j]
                 index2 = rout.sequenceOfNodes[j + 1]
@@ -136,7 +140,7 @@ class Solver:
             single_profit.append(profit)
             self.sol.routes[i].profit = profit
             total_profit += profit
-        return total_profit   
+        print(total_profit)  
             
             
         
