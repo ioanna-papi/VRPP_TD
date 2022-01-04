@@ -109,7 +109,7 @@ class Solver:
                 
                 self.route.time = total_route_time
                 self.sol.routes.append(self.route)
-                self.sol.profit += self.total_route_profit[r]
+                self.sol.profit += self.total_route_profit
                   
         f = open("BestNode8180099.txt", "w+")
         for i in range(len(self.sol.routes)):
