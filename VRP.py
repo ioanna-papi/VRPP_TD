@@ -49,10 +49,9 @@ class Node:
 class Route:
     def __init__(self, time_limit):
         self.sequenceOfNodes = []
-        self.cost = 0
         self.time_limit = time_limit
-        self.load = 0
         self.time = 0
-        self.dist = 0
+        self.profit = 0
+      
         
         
