@@ -177,22 +177,23 @@ class Solver:
         insertions = 0
         #while (insertions < len(self.customers)):
         for r in range(5):
-            bestInsertion = CustomerInsertion()
-            lastRoute: Route = self.GetLastOpenRoute()
-            if lastRoute is not None:
-                self.IdentifyBestInsertion(bestInsertion, lastRoute)
-            if (bestInsertion.customer is not None):
-                self.ApplyCustomerInsertion(bestInsertion)
-                insertions += 1
-            else:
-                if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
-                    modelIsFeasible = False
-                    break
+            for i in range(len(self.allNodes)):
+                bestInsertion = CustomerInsertion()
+                lastRoute: Route = self.GetLastOpenRoute()
+                if lastRoute is not None:
+                    self.IdentifyBestInsertion(bestInsertion, lastRoute)
+                if (bestInsertion.customer is not None):
+                    self.ApplyCustomerInsertion(bestInsertion)
+                    insertions += 1
                 else:
-                    rt = Route(self.depot, 150)
-                    self.sol.routes.append(rt)
-        if (modelIsFeasible == False):
-            print('FeasibilityIssue')
+                    if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
+                        modelIsFeasible = False
+                        break
+                    else:
+                        rt = Route(self.depot, 150)
+                        self.sol.routes.append(rt)
+            if (modelIsFeasible == False):
+                print('FeasibilityIssue')
         
         
     
