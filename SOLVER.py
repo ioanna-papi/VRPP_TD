@@ -145,7 +145,7 @@ class Solver:
                 
                 if (rt.sequenceOfNodes[j].ID != 0):
                     print(rt.sequenceOfNodes[j].ID, end=' ', )
-                
+            print(rt.sequenceOfNodes[0].ID, end=' ', )    
                 f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
             f.write("\n")
             print("\n")
