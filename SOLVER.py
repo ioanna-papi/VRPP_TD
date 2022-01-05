@@ -196,8 +196,9 @@ class Solver:
                     else:
                         rt = Route(self.depot, 150)
                         self.sol.routes.append(rt)
-         if (modelIsFeasible == False):
-            print('FeasibilityIssue')
+                        
+                if (modelIsFeasible == False):
+                    print('FeasibilityIssue')
         
         
     
