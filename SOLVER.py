@@ -116,6 +116,7 @@ class Solver:
                 else:
                     break 
                     
+                self.route.time_limit = 150 - total_route_time
                 self.route.time = total_route_time
                 self.route.profit = total_route_profit
                 self.sol.routes.append(self.route)
