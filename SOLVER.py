@@ -129,13 +129,14 @@ class Solver:
                             bestInsertion.time = total_time
 
                             
-    def ApplyCustomerInsertion(self, insertion):
+    def ApplyCustomerInsertion(self, insertion, total_route_time):
         insCustomer = insertion.customer
         rt = insertion.route
         rt.sequenceOfNodes.append(insCustomer)
         beforeInserted = rt.sequenceOfNodes[-2]
         distAdded = self.distanceMatrix[beforeInserted.ID][insCustomer.ID]
         rt.time += (distAdded + insCustomer.service_time)
+        total_route_time += (distAdded + insCustomer.service_time)
         rt.profit += insCustomer.profit
         self.sol.profit += insCustomer.profit
         self.sol.time += (distAdded + insCustomer.service_time)
@@ -175,16 +176,17 @@ class Solver:
         modelIsFeasible = True
         self.sol = Solution()
         insertions = 0
+        total_route_time = 0
         #while (insertions < len(self.customers)):
         for r in range(5):
             #for i in range(len(self.allNodes)):
-            while (insertions < len(self.customers)):
+            while (total_route_time <= 150):
                 bestInsertion = CustomerInsertion()
                 lastRoute: Route = self.GetLastOpenRoute()
                 if lastRoute is not None:
                     self.IdentifyBestInsertion(bestInsertion, lastRoute)
                 if (bestInsertion.customer is not None):
-                    self.ApplyCustomerInsertion(bestInsertion)
+                    self.ApplyCustomerInsertion(bestInsertion, total_route_time)
                     insertions += 1
                 else:
                     if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
