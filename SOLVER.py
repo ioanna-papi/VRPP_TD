@@ -173,9 +173,11 @@ class Solver:
                 self.sol.routes.remove(rt)
 
     def ApplyBestNodeMethod(self):
-        modelIsFeasible = True
-        self.sol = Solution()
+        #modelIsFeasible = True
+        #self.sol = Solution()
         for r in range(5):
+            modelIsFeasible = True
+            self.sol = Solution()
             #total_route_time = 0
             insertions = 0
             for n in range(len(self.allNodes)):
