@@ -106,8 +106,8 @@ class Solver:
 
                 
     def IdentifyMaxProfitInsertion(self, best_insertion):
-        for i in range(0, len(self.customers)):
-            candidateCust: Node = self.customers[i]
+        for i in range(0, len(self.allNodes)):
+            candidateCust: Node = self.allNodes[i]
             if candidateCust.isRouted is False:
                 for rt in self.sol.routes:
                     if rt.time_limit >= 0:
@@ -205,8 +205,8 @@ class Solver:
             print('Solution Cost problem')
 
     def IdentifyBestInsertionAllPositions(self, best_insertion, rt):
-        for i in range(0, len(self.customers)):
-            candidateCust: Node = self.customers[i]
+        for i in range(0, len(self.allNodes)):
+            candidateCust: Node = self.allNodes[i]
             if candidateCust.isRouted is False:
                 for rt in self.sol.routes:
                     if rt.time_limit >= 0:
