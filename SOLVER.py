@@ -119,8 +119,8 @@ class Solver:
             if candidateCust.isRouted is False:
                 if rt.time_limit >= 0:
                     lastNode = rt.sequenceOfNodes[-1]
-                    total_time = self.distanceMatrix[lastNode.ID][candidateCust.ID] + self.customers[candidateCust.ID].service_time
-                    cprofit = self.customers[candidateCust.ID].profit
+                    total_time = self.distanceMatrix[lastNode.ID][candidateCust.ID] + candidateCust.service_time
+                    cprofit = candidateCust.profit
                     if rt.time_limit - total_time >= 0:
                         if (cprofit - total_time) > (bestInsertion.profit - bestInsertion.time):
                             bestInsertion.customer = candidateCust
