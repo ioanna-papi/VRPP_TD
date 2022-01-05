@@ -139,7 +139,7 @@ class Solver:
             self.sol.routes.append(self.route)
             self.sol.profit += total_profit
 
-        f = open("BestNode8180099.txt", "w+")
+        f = open("AllRoutes_8180099.txt", "w+")
         for i in range(len(self.sol.routes)):
             rt: Route = self.sol.routes[i]
             f.write("This is route: \n")
