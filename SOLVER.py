@@ -178,7 +178,7 @@ class Solver:
         for r in range(5):
             #total_route_time = 0
             for n in range(len(self.allNodes)):
-            #insertions = 0
+            insertions = 0
             #while (insertions < len(self.customers)):
                 bestInsertion = CustomerInsertion()
                 lastRoute: Route = self.GetLastOpenRoute()
