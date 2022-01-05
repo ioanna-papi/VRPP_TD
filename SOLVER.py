@@ -146,7 +146,7 @@ class Solver:
                 print(rt.sequenceOfNodes[j].ID, end=' ')
             print(rt.cost)
         SolDrawer.draw('MinIns', self.sol, self.allNodes)
-        print(self.sol.cost)
+        print(self.sol.profit)
 
     def GetLastOpenRoute(self):
         if len(self.sol.routes) == 0:
@@ -222,6 +222,6 @@ class Solver:
         rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
         rt.profit += insertion.profit
         rt.time += insertion.cost
-        rt.service_time = 150 - insertion.cost
+        rt.time_limit = 150 - insertion.cost
         self.sol.profit += insertion.profit
         insCustomer.isRouted = True
