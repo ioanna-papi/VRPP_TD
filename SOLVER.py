@@ -9,7 +9,10 @@ class CustomerInsertion(object):
     def __init__(self):
         self.customer = None
         self.route = None
+        self.insertionPosition = None
+        self.profit = -(10 ** 9)
         self.dist = 10 ** 9
+        self.cost = 10 ** 9
 
 class RelocationMove(object):
     def __init__(self):
@@ -111,6 +114,7 @@ class Solver:
                                 best_insertion.customer = candidateCust
                                 best_insertion.route = rt
                                 best_insertion.insertionPosition = j
+                                best_insertion.cost = trialCost
                                 best_insertion.profit = marginalProfit
                     else:
                         continue
@@ -176,16 +180,13 @@ class Solver:
         for r in range (0, len(self.sol.routes)):
             rt: Route = self.sol.routes[r]
             rtCost = 0
-            rtLoad = 0
             for n in range (0 , len(rt.sequenceOfNodes) - 1):
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
                 rtCost += self.distanceMatrix[A.ID][B.ID]
-                rtLoad += A.demand
+      
             if abs(rtCost - rt.cost) > 0.0001:
                 print ('Route Cost problem')
-            if rtLoad != rt.load:
-                print ('Route Load problem')
 
             totalSolCost += rt.cost
 
@@ -211,6 +212,7 @@ class Solver:
                                 best_insertion.route = rt
                                 best_insertion.insertionPosition = j
                                 best_insertion.profit = marginalProfit
+                                best_insertion.cost = trialCost
                    
 
     def ApplyCustomerInsertionAllPositions(self, insertion):
@@ -219,5 +221,7 @@ class Solver:
         insIndex = insertion.insertionPosition
         rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
         rt.profit += insertion.profit
+        rt.time += insertion.cost
+        rt.service_time = 150 - insertion.cost
         self.sol.profit += insertion.profit
         insCustomer.isRouted = True
