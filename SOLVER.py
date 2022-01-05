@@ -83,7 +83,8 @@ class TwoOptMove(object):
         self.positionOfFirstNode = None
         self.positionOfSecondNode = None
         self.moveCost = 10 ** 9
-        
+
+# Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
 class Solver:
     def __init__(self, m):
         self.allNodes = m.allNodes
