@@ -112,10 +112,13 @@ class Solver:
                 for i in range(len(self.allNodes)):
                     if self.allNodes[i].isRouted == False:
                         flag = True
-                        if (self.allNodes[i].profit - (self.distanceMatrix[node][i] +  self.allNodes[i].service_time)) > max1:
-                            max1 = self.allNodes[i].profit - (self.distanceMatrix[node][i] +  self.allNodes[i].service_time)
+                        #if (self.allNodes[i].profit - (self.distanceMatrix[node][i] +  self.allNodes[i].service_time)) > max1:
+                            #max1 = self.allNodes[i].profit - (self.distanceMatrix[node][i] +  self.allNodes[i].service_time)
+                            #position = i
+                        if (self.allNodes[i].profit > max1 and (self.distanceMatrix[node][i] +  self.allNodes[i].service_time) < 80 )
+                            max1 = self.allNodes[i].profit
                             position = i
-                            
+                        
                 if not flag:
                     break
                     
