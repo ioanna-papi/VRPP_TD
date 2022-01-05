@@ -138,6 +138,7 @@ class Solver:
         rt.time += (distAdded + insCustomer.service_time)
         rt.profit += insCustomer.profit
         self.sol.profit += insCustomer.profit
+        self.sol.time += (distAdded + insCustomer.service_time)
         rt.time_limit -= (distAdded + insCustomer.service_time)
         insCustomer.isRouted = True
 
@@ -150,23 +151,19 @@ class Solver:
             print("")
 
     def TestSolution(self):
-        totalSolDist = 0
+        totalSolTime = 0
         for r in range(0, len(self.sol.routes)):
             rt: Route = self.sol.routes[r]
-            rtDist = 0
-            rtLoad = 0
+            rtTime = 0
             for n in range(0, len(rt.sequenceOfNodes) - 1):
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
-                rtDist += self.distanceMatrix[A.id][B.id]
-                rtLoad += A.demand
-            rtLoad += B.demand
-            if abs(rtDist - rt.dist) > 0.0001:
+                rtTime += (self.distanceMatrix[A.id][B.id] + self.customers[B.id].service_time)
+               
+            if abs(rtTime - rt.time) > 0.0001:
                 print('Route Cost problem')
-            if rtLoad != rt.load:
-                print('Route Load problem')
-            totalSolDist += rt.dist
-        if abs(totalSolDist - self.sol.dist) > 0.0001:
+            totalSolTime += rt.time
+        if abs(totalSolTime - self.sol.time) > 0.0001:
             print('Solution Cost problem')
 
     def CalculateRoutes(self):
