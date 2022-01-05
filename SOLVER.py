@@ -12,8 +12,7 @@ class CustomerInsertion(object):
         self.customer = None
         self.route = None
         self.profit = -(10 ** 9)
-        self.dist = 10 ** 9
-        self.cost = 10 ** 9
+        self.time = 10 ** 9
         
 class CustomerInsertionAllPositions(object):
     def __init__(self):
@@ -21,8 +20,8 @@ class CustomerInsertionAllPositions(object):
         self.route = None
         self.insertionPosition = None
         self.profit = -(10 ** 9)
-        self.dist = 10 ** 9
-        self.cost = 10 ** 9
+        self.time = 10 ** 9
+        
         
 class RelocationMove(object):
     def __init__(self):
@@ -89,6 +88,7 @@ class Solver:
     def __init__(self, m):
         self.allNodes = m.allNodes
         self.depot = m.allNodes[0]
+        self.customers = m.customers
         self.distanceMatrix = m.matrix
         self.total_route_time = 0
         self.total_route_profit = 0
@@ -100,13 +100,12 @@ class Solver:
         self.ReportSolution(self.sol)
         return self.sol
 
-    def CalculateDistance(self, sol):
-        distance = 0
+    def CalculateProfit(self, sol):
+        profit = 0
         for i in range(0, len(sol.routes)):
             for j in range(0, len(sol.routes[i].sequenceOfNodes) - 1):
-                distance = distance + self.distanceMatrix[sol.routes[i].sequenceOfNodes[j].id][
-                    sol.routes[i].sequenceOfNodes[j + 1].id]
-        return distance
+                profit += self.allNodes[sol.routes[i].sequenceOfNodes[j].ID].profit
+        return profit
 
     def GetLastOpenRoute(self):
         if len(self.sol.routes) == 0:
@@ -118,29 +117,32 @@ class Solver:
         for i in range(0, len(self.customers)):
             candidateCust: Node = self.customers[i]
             if candidateCust.isRouted is False:
-                if rt.load + candidateCust.demand <= rt.capacity:
-                    lastNodePresentInTheRoute = rt.sequenceOfNodes[-1]
-                    trialDist = self.distanceMatrix[lastNodePresentInTheRoute.id][candidateCust.id]
-                    if rt.time + candidateCust.service_time + (trialDist / 35) <= 3.5:
-                        if trialDist < bestInsertion.dist:
+                if rt.time_limit >= 0:
+                    lastNode = rt.sequenceOfNodes[-1]
+                    total_time = self.distanceMatrix[lastNode.ID][candidateCust.ID] + self.customers[candidateCust.ID].service_time
+                    cprofit = self.customers[candidateCust.ID].profit
+                    if rt.time_limit - total_time >= 0:
+                        if (cprofit - total_time) > (bestInsertion.profit - bestInsertion.time):
                             bestInsertion.customer = candidateCust
                             bestInsertion.route = rt
-                            bestInsertion.dist = trialDist
+                            bestInsertion.profit = cprofit
+                            bestInsertion.time = total_time
 
+                            
     def ApplyCustomerInsertion(self, insertion):
         insCustomer = insertion.customer
         rt = insertion.route
         rt.sequenceOfNodes.append(insCustomer)
         beforeInserted = rt.sequenceOfNodes[-2]
-        distAdded = self.distanceMatrix[beforeInserted.id][insCustomer.id]
-        rt.dist += distAdded
-        self.sol.dist += distAdded
-        rt.load += insCustomer.demand
-        rt.time += distAdded / 35 + insCustomer.service_time
+        distAdded = self.distanceMatrix[beforeInserted.ID][insCustomer.ID]
+        rt.time += (distAdded + insCustomer.service_time)
+        rt.profit += insCustomer.profit
+        self.sol.profit += insCustomer.profit
+        rt.time_limit -= (distAdded + insCustomer.service_time)
         insCustomer.isRouted = True
 
     def ReportSolution(self, sol):
-        print(self.sol.dist)
+        print(self.sol.profit)
         for i in range(0, len(sol.routes)):
             rt = sol.routes[i]
             for j in range(0, len(rt.sequenceOfNodes)):
@@ -178,21 +180,18 @@ class Solver:
         insertions = 0
         while (insertions < len(self.customers)):
             bestInsertion = CustomerInsertion()
-            lastOpenRoute: Route = self.GetLastOpenRoute()
-            if lastOpenRoute is not None:
-                self.IdentifyBestInsertion(bestInsertion, lastOpenRoute)
+            lastRoute: Route = self.GetLastOpenRoute()
+            if lastRoute is not None:
+                self.IdentifyBestInsertion(bestInsertion, lastRoute)
             if (bestInsertion.customer is not None):
                 self.ApplyCustomerInsertion(bestInsertion)
                 insertions += 1
             else:
-                if lastOpenRoute is not None and len(lastOpenRoute.sequenceOfNodes) == 1:
+                if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
                     modelIsFeasible = False
                     break
                 else:
-                    if len(self.sol.routes) < 15:
-                        rt = Route(self.depot, 1500)
-                    else:
-                        rt = Route(self.depot, 1200)
+                    rt = Route(self.depot, 150)
                     self.sol.routes.append(rt)
         if (modelIsFeasible == False):
             print('FeasibilityIssue')
