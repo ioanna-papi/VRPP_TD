@@ -175,7 +175,7 @@ class Solver:
             total_profit += pr
         return total_profit
    
-        
+# Ερώτημα Γ - Τελεστές τοπικής έρευνας        
         
 
         
