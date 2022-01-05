@@ -175,7 +175,8 @@ class Solver:
         modelIsFeasible = True
         self.sol = Solution()
         insertions = 0
-        while (insertions < len(self.customers)):
+        #while (insertions < len(self.customers)):
+        for r in range(5):
             bestInsertion = CustomerInsertion()
             lastRoute: Route = self.GetLastOpenRoute()
             if lastRoute is not None:
