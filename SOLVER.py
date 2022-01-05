@@ -135,7 +135,7 @@ class Solver:
         self.sol = Solution()
         insertions = 0
 
-        for i in range(0,5):
+        for rg in range(5):
             rt = Route(self.depot, 150)
             best_insertion = CustomerInsertionAllPositions()
             self.IdentifyMaxProfitInsertion(best_insertion, rt)
