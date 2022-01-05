@@ -23,6 +23,7 @@ class Model:
             profit = random.randint(5, 20)
             cust = Node(i + 1, xx, yy, service_time, profit)
             all_nodes.append(cust)
+            self.customers.append(cust)
                
         self.allNodes = all_nodes
         rows = len(self.allNodes)
