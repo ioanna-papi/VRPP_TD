@@ -185,7 +185,7 @@ class Solver:
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
                 rtCost += (self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time)
-            if (rt.time > 150)
+            if (rt.time > 150):
                 print ('Route Cost problem')
                 
             if abs(rtCost - rt.time) > 0.0001:
