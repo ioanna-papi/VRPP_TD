@@ -3,6 +3,7 @@ from VRP import *
 class Solution:
     def __init__(self):
         self.profit = 0
+        self.cost = 0
         self.routes = []
 
 class CustomerInsertion(object):
@@ -144,7 +145,7 @@ class Solver:
             rt = sol.routes[i]
             for j in range (0, len(rt.sequenceOfNodes)):
                 print(rt.sequenceOfNodes[j].ID, end=' ')
-            print(rt.cost)
+            print(rt.profit)
         SolDrawer.draw('MinIns', self.sol, self.allNodes)
         print(self.sol.profit)
 
@@ -183,14 +184,14 @@ class Solver:
             for n in range (0 , len(rt.sequenceOfNodes) - 1):
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
-                rtCost += self.distanceMatrix[A.ID][B.ID]
-            if (rt.cost > 150)
+                rtCost += (self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time)
+            if (rt.time > 150)
                 print ('Route Cost problem')
                 
-            if abs(rtCost - rt.cost) > 0.0001:
+            if abs(rtCost - rt.time) > 0.0001:
                 print ('Route Cost problem')
 
-            totalSolCost += rt.cost
+            totalSolCost += rt.time
 
         if abs(totalSolCost - self.sol.cost) > 0.0001:
             print('Solution Cost problem')
@@ -226,4 +227,5 @@ class Solver:
         rt.time += insertion.cost
         rt.time_limit -= insertion.cost
         self.sol.profit += insertion.profit
+        self.sol.cost += insertion.cost
         insCustomer.isRouted = True
