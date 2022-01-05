@@ -85,7 +85,7 @@ class Solver:
             
             total_route_time = 0
             total_route_profit = 0
-            self.route = Route(self.route.time, self.route.profit)
+            self.route = Route(self.total_route_time, self.total_route_profit)
             node = 0
             self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
