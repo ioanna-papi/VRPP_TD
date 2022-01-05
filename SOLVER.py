@@ -10,11 +10,19 @@ class CustomerInsertion(object):
     def __init__(self):
         self.customer = None
         self.route = None
+        self.profit = -(10 ** 9)
+        self.dist = 10 ** 9
+        self.cost = 10 ** 9
+        
+class CustomerInsertionAllPositions(object):
+    def __init__(self):
+        self.customer = None
+        self.route = None
         self.insertionPosition = None
         self.profit = -(10 ** 9)
         self.dist = 10 ** 9
         self.cost = 10 ** 9
-
+        
 class RelocationMove(object):
     def __init__(self):
         self.originRoutePosition = None
