@@ -82,9 +82,10 @@ class Solver:
     def ApplyBestNodeMethod(self):
         
         for r in range(5):
-            self.route = Route(200)
+            
             total_route_time = 0
             total_route_profit = 0
+            self.route = Route(self.route.time, self.route.profit)
             node = 0
             self.route.sequenceOfNodes.append(self.allNodes[0])
             self.allNodes[0].isRouted = True
