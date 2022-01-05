@@ -147,7 +147,7 @@ class Solver:
         for i in range(0, len(sol.routes)):
             rt = sol.routes[i]
             for j in range(0, len(rt.sequenceOfNodes)):
-                print(rt.sequenceOfNodes[j].id, end=' ')
+                print(rt.sequenceOfNodes[j].ID, end=' ')
             print("")
 
     def TestSolution(self):
@@ -158,7 +158,7 @@ class Solver:
             for n in range(0, len(rt.sequenceOfNodes) - 1):
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
-                rtTime += (self.distanceMatrix[A.id][B.id] + self.customers[B.id].service_time)
+                rtTime += (self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time)
                
             if abs(rtTime - rt.time) > 0.0001:
                 print('Route Cost problem')
