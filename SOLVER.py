@@ -154,26 +154,26 @@ class Solver:
         else:
             return self.sol.routes[-1]
 
-    def CalculateTotalCost(self, sol):
-        c = 0
+    def CalculateTotalProfit(self, sol):
+        pr = 0
         for i in range(0, len(sol.routes)):
             rt = sol.routes[i]
             for j in range(0, len(rt.sequenceOfNodes) - 1):
                 a = rt.sequenceOfNodes[j]
                 b = rt.sequenceOfNodes[j + 1]
-                c += self.distanceMatrix[a.ID][b.ID]
-        return c
+                pr += self.allNodes[b.ID].profit
+        return pr
 
-    def UpdateRouteCostAndLoad(self, rt: Route):
-        tc = 0
-        tl = 0
+    def UpdateRouteCostAndProfit(self, rt: Route):
+        c = 0
+        p = 0
         for i in range(0, len(rt.sequenceOfNodes) - 1):
             A = rt.sequenceOfNodes[i]
             B = rt.sequenceOfNodes[i+1]
-            tc += self.distanceMatrix[A.ID][B.ID]
-            tl += A.demand
-        rt.load = tl
-        rt.cost = tc
+            c += self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
+            p += self.allNodes[B.ID].profit
+        rt.profit = p
+        rt.time = c
 
     def TestSolution(self):
         totalSolCost = 0
@@ -184,7 +184,9 @@ class Solver:
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
                 rtCost += self.distanceMatrix[A.ID][B.ID]
-      
+            if (rt.cost > 150)
+                print ('Route Cost problem')
+                
             if abs(rtCost - rt.cost) > 0.0001:
                 print ('Route Cost problem')
 
@@ -222,6 +224,6 @@ class Solver:
         rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
         rt.profit += insertion.profit
         rt.time += insertion.cost
-        rt.time_limit = 150 - insertion.cost
+        rt.time_limit -= insertion.cost
         self.sol.profit += insertion.profit
         insCustomer.isRouted = True
