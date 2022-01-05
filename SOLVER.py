@@ -119,25 +119,27 @@ class Solver:
                                 B.ID] + self.allNodes[candidateCust.ID].service_time + self.allNodes[B.ID].service_time
                             costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
                             trialCost = costAdded - costRemoved
-                            marginalProfit = self.allNodes[candidateCust.ID].profit - (trialCost/150)
-                            if marginalProfit > best_insertion.profit:
-                                best_insertion.customer = candidateCust
-                                best_insertion.route = rt
-                                best_insertion.insertionPosition = j
-                                best_insertion.cost = trialCost
-                                best_insertion.profit = marginalProfit
-                    else:
-                        continue
+                            marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
+                            if (rt.time_limit - trialCost) >= 0:
+                                if marginalProfit > (best_insertion.profit - best_insertion.cost):
+                                    best_insertion.customer = candidateCust
+                                    best_insertion.route = rt
+                                    best_insertion.insertionPosition = j
+                                    best_insertion.cost = trialCost
+                                    best_insertion.profit = marginalProfit
+                            else:
+                                continue
                 
     def MinimumInsertions(self):
         model_is_feasible = True
         self.sol = Solution()
         insertions = 0
 
-        while insertions < len(self.allNodes):
+        for i in range(0,5):
             best_insertion = CustomerInsertionAllPositions()
             self.IdentifyMaxProfitInsertion(best_insertion)
-
+            rt = Route(self.depot, 150)
+            
             if best_insertion.customer is not None:
                 self.ApplyCustomerInsertionAllPositions(best_insertion)
                 insertions += 1
@@ -218,13 +220,14 @@ class Solver:
                                 B.ID] + self.allNodes[candidateCust.ID].service_time + self.allNodes[B.ID].service_time
                             costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
                             trialCost = costAdded - costRemoved
-                            marginalProfit = self.allNodes[candidateCust.ID].profit - (trialCost/150)
-                            if marginalProfit > best_insertion.profit:
-                                best_insertion.customer = candidateCust
-                                best_insertion.route = rt
-                                best_insertion.insertionPosition = j
-                                best_insertion.profit = marginalProfit
-                                best_insertion.cost = trialCost
+                            marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
+                            if (rt.time_limit - trialCost) >= 0:
+                                if marginalProfit > (best_insertion.profit - best_insertion.cost):
+                                    best_insertion.customer = candidateCust
+                                    best_insertion.route = rt
+                                    best_insertion.insertionPosition = j
+                                    best_insertion.cost = trialCost
+                                    best_insertion.profit = marginalProfit
                    
 
     def ApplyCustomerInsertionAllPositions(self, insertion):
