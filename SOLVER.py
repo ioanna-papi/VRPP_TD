@@ -141,7 +141,7 @@ class Solver:
         self.sol.time += (distAdded + insCustomer.service_time)
         rt.time_limit -= (distAdded + insCustomer.service_time)
         insCustomer.isRouted = True
-        return (rt.time)
+        
 
     def ReportSolution(self, sol):
         print(self.sol.profit)
@@ -186,7 +186,8 @@ class Solver:
                 if lastRoute is not None:
                     self.IdentifyBestInsertion(bestInsertion, lastRoute)
                 if (bestInsertion.customer is not None):
-                    total_route_time = self.ApplyCustomerInsertion(bestInsertion)
+                    self.ApplyCustomerInsertion(bestInsertion)
+                    total_route_time += 50
                     insertions += 1
                 else:
                     if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
