@@ -93,8 +93,8 @@ class Solver:
         return self.sol
 
     def SetRoutedFlagToFalseForAllCustomers(self):
-        for i in range(0, len(self.customers)):
-            self.customers[i].isRouted = False
+        for i in range(0, len(self.allNodes)):
+            self.allNodes[i].isRouted = False
 
                 
     def IdentifyMaxProfitInsertion(self, best_insertion):
