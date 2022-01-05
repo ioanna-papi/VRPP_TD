@@ -120,7 +120,7 @@ class Solver:
                             costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
                             trialCost = costAdded - costRemoved
                             marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
-                            if marginalProfit > best_insertion.cost:
+                            if marginalProfit > best_insertion.profit:
                                 best_insertion.customer = candidateCust
                                 best_insertion.route = rt
                                 best_insertion.insertionPosition = j
@@ -219,7 +219,7 @@ class Solver:
                             costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
                             trialCost = costAdded - costRemoved
                             marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
-                            if marginalProfit > best_insertion.cost:
+                            if marginalProfit > best_insertion.profit:
                                 best_insertion.customer = candidateCust
                                 best_insertion.route = rt
                                 best_insertion.insertionPosition = j
