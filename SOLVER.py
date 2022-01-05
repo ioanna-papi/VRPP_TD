@@ -1,4 +1,5 @@
 from VRP import *
+from SolutionDrawer import *
 
 class Solution:
     def __init__(self):
