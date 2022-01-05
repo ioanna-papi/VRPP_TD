@@ -50,7 +50,7 @@ class Route:
     def __init__(self, dp, time_limit):
         self.sequenceOfNodes = []
         self.sequenceOfNodes.append(dp)
-        self.time_limit = 150
+        self.time_limit = time_limit
         self.time = 0
         self.profit = 0
       
