@@ -176,9 +176,9 @@ class Solver:
         modelIsFeasible = True
         self.sol = Solution()
         insertions = 0
-        total_route_time = 0
         #while (insertions < len(self.customers)):
         for r in range(5):
+            total_route_time = 0
             #for i in range(len(self.allNodes)):
             while (total_route_time <= 150):
                 bestInsertion = CustomerInsertion()
