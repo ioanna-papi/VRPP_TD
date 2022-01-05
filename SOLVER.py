@@ -171,7 +171,7 @@ class Solver:
         for i in range(0, len(rt.sequenceOfNodes) - 1):
             A = rt.sequenceOfNodes[i]
             B = rt.sequenceOfNodes[i+1]
-            c += self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
+            c += (self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time)
             p += self.allNodes[B.ID].profit
         rt.profit = p
         rt.time = c
