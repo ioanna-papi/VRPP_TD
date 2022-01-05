@@ -140,11 +140,12 @@ class Solver:
         for i in range(len(self.sol.routes)):
             rt: Route = self.sol.routes[i]
             f.write("This is route: \n")
+            print(rt.sequenceOfNodes[0].ID, end=' ', )
             for j in range(len(rt.sequenceOfNodes)):
-                print(rt.sequenceOfNodes[0].ID, end=' ', )
+                
                 if (rt.sequenceOfNodes[j].ID != 0):
                     print(rt.sequenceOfNodes[j].ID, end=' ', )
-                print(rt.sequenceOfNodes[0].ID, end=' ', )
+                
                 f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
             f.write("\n")
             print("\n")
