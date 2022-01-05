@@ -136,9 +136,9 @@ class Solver:
         insertions = 0
 
         for i in range(0,5):
+            rt = Route(self.depot, 150)
             best_insertion = CustomerInsertionAllPositions()
             self.IdentifyMaxProfitInsertion(best_insertion)
-            rt = Route(self.depot, 150)
             
             if best_insertion.customer is not None:
                 self.ApplyCustomerInsertionAllPositions(best_insertion)
