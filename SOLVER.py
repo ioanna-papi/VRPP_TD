@@ -139,7 +139,8 @@ class Solver:
             self.route.time_limit -= total_time
             self.sol.routes.append(self.route)
             self.sol.profit += total_profit
-
+        
+        print("\n")
         f = open("AllRoutes_8180099.txt", "w+")
         for i in range(len(self.sol.routes)):
             rt: Route = self.sol.routes[i]
