@@ -173,11 +173,9 @@ class Solver:
                 self.sol.routes.remove(rt)
 
     def ApplyBestNodeMethod(self):
-        #modelIsFeasible = True
-        #self.sol = Solution()
-        for r in range(5):
-            modelIsFeasible = True
-            self.sol = Solution()
+        modelIsFeasible = True
+        self.sol = Solution()
+        for r in range(0,5):
             #total_route_time = 0
             insertions = 0
             for n in range(len(self.allNodes)):
@@ -198,8 +196,8 @@ class Solver:
                     else:
                         rt = Route(self.depot, 150)
                         self.sol.routes.append(rt)
-            if (modelIsFeasible == False):
-                print('FeasibilityIssue')
+         if (modelIsFeasible == False):
+            print('FeasibilityIssue')
         
         
     
