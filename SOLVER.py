@@ -119,7 +119,7 @@ class Solver:
                 if not flag:
                     break
                     
-                elif (total_route_time + (self.distanceMatrix[node][position] +  self.allNodes[position].service_time) <= 150):
+                elif (total_time + (self.distanceMatrix[node][position] +  self.allNodes[position].service_time) <= 150):
                     self.route.sequenceOfNodes.append(self.allNodes[position])
                     self.allNodes[position].isRouted = True
                     a = self.allNodes[position]
