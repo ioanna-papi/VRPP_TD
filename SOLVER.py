@@ -159,7 +159,7 @@ class Solver:
         SolDrawer.draw('final_Solution_8180099', self.sol, self.allNodes)
         return (self.sol)
 
-    ## method that calculates the total profit of the solution given
+    # method that calculates the total profit of the solution given
     def objective(self, solution):
         total_profit = 0
         single_profit = []
