@@ -164,7 +164,7 @@ class Solver:
                 pr += index2.profit
             single_profit.append(pr)
             self.sol.routes[i].profit = pr
-            total_profit += profit
+            total_profit += pr
         return total_profit
    
         
