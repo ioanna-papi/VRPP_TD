@@ -92,34 +92,26 @@ class Solver:
         for i in range(0, len(self.customers)):
             self.customers[i].isRouted = False
 
-    def Always_keep_an_empty_route(self):
-        if len(self.sol.routes) == 0:
-            rt = Route(self.depot, self.capacity)
-            self.sol.routes.append(rt)
-        else:
-            rt = self.sol.routes[-1]
-            if len(rt.sequenceOfNodes) > 2:
-                rt = Route(self.depot, self.capacity)
-                self.sol.routes.append(rt)
                 
     def IdentifyMaxProfitInsertion(self, best_insertion):
         for i in range(0, len(self.customers)):
             candidateCust: Node = self.customers[i]
             if candidateCust.isRouted is False:
                 for rt in self.sol.routes:
-                    if rt.load + candidateCust.demand <= rt.capacity:
+                    if rt.time_limit >= 0:
                         for j in range(0, len(rt.sequenceOfNodes) - 1):
                             A = rt.sequenceOfNodes[j]
                             B = rt.sequenceOfNodes[j + 1]
                             costAdded = self.distanceMatrix[A.ID][candidateCust.ID] + self.distanceMatrix[candidateCust.ID][
-                                B.ID]
-                            costRemoved = self.distanceMatrix[A.ID][B.ID]
+                                B.ID] + self.allNodes[candidateCust.ID].service_time + self.allNodes[B.ID].service_time
+                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
                             trialCost = costAdded - costRemoved
-                            if trialCost < best_insertion.cost:
+                            marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
+                            if marginalProfit > best_insertion.cost:
                                 best_insertion.customer = candidateCust
                                 best_insertion.route = rt
                                 best_insertion.insertionPosition = j
-                                best_insertion.cost = trialCost
+                                best_insertion.profit = marginalProfit
                     else:
                         continue
                 
@@ -128,7 +120,7 @@ class Solver:
         self.sol = Solution()
         insertions = 0
 
-        while insertions < len(self.customers):
+        while insertions < len(self.allNodes):
             best_insertion = CustomerInsertionAllPositions()
             self.IdentifyMaxProfitInsertion(best_insertion)
 
@@ -204,26 +196,28 @@ class Solver:
         for i in range(0, len(self.customers)):
             candidateCust: Node = self.customers[i]
             if candidateCust.isRouted is False:
-                if rt.load + candidateCust.demand <= rt.capacity:
-                    for j in range(0, len(rt.sequenceOfNodes) - 1):
-                        A = rt.sequenceOfNodes[j]
-                        B = rt.sequenceOfNodes[j + 1]
-                        costAdded = self.distanceMatrix[A.ID][candidateCust.ID] + self.distanceMatrix[candidateCust.ID][B.ID]
-                        costRemoved = self.distanceMatrix[A.ID][B.ID]
-                        trialCost = costAdded - costRemoved
-
-                        if trialCost < best_insertion.cost:
-                            best_insertion.customer = candidateCust
-                            best_insertion.route = rt
-                            best_insertion.cost = trialCost
-                            best_insertion.insertionPosition = j
+                for rt in self.sol.routes:
+                    if rt.time_limit >= 0:
+                        for j in range(0, len(rt.sequenceOfNodes) - 1):
+                            A = rt.sequenceOfNodes[j]
+                            B = rt.sequenceOfNodes[j + 1]
+                            costAdded = self.distanceMatrix[A.ID][candidateCust.ID] + self.distanceMatrix[candidateCust.ID][
+                                B.ID] + self.allNodes[candidateCust.ID].service_time + self.allNodes[B.ID].service_time
+                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time
+                            trialCost = costAdded - costRemoved
+                            marginalProfit = self.allNodes[candidateCust.ID].profit - trialCost
+                            if marginalProfit > best_insertion.cost:
+                                best_insertion.customer = candidateCust
+                                best_insertion.route = rt
+                                best_insertion.insertionPosition = j
+                                best_insertion.profit = marginalProfit
+                   
 
     def ApplyCustomerInsertionAllPositions(self, insertion):
         insCustomer = insertion.customer
         rt = insertion.route
         insIndex = insertion.insertionPosition
         rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
-        rt.cost += insertion.cost
-        self.sol.cost += insertion.cost
-        rt.load += insCustomer.demand
+        rt.profit += insertion.profit
+        self.sol.profit += insertion.profit
         insCustomer.isRouted = True
