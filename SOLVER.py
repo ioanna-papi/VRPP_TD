@@ -116,7 +116,7 @@ class Solver:
                 else:
                     break 
                     
-                
+                self.route = Route(total_route_time, total_route_profit)
                 self.route.time = total_route_time
                 self.route.profit = total_route_profit
                 self.sol.routes.append(self.route)
