@@ -177,7 +177,8 @@ class Solver:
         insertions = 0
         #while (insertions < len(self.customers)):
         for r in range(5):
-            for i in range(len(self.allNodes)):
+            #for i in range(len(self.allNodes)):
+            while (insertions < len(self.customers)):
                 bestInsertion = CustomerInsertion()
                 lastRoute: Route = self.GetLastOpenRoute()
                 if lastRoute is not None:
