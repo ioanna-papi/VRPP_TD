@@ -98,7 +98,7 @@ class Solver:
         
     def ApplyBestNodeMethod(self):
         for r in range(5):
-            self.route = Route(150)
+            self.route = Route(self.allNodes[0],150)
             node = 0
             time_limit = 150
             self.route.sequenceOfNodes.append(self.allNodes[0])
