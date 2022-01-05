@@ -175,20 +175,18 @@ class Solver:
     def ApplyBestNodeMethod(self):
         modelIsFeasible = True
         self.sol = Solution()
-        insertions = 0
-        #while (insertions < len(self.customers)):
         for r in range(5):
-            total_route_time = 0
+            #total_route_time = 0
             #for i in range(len(self.allNodes)):
-            while (total_route_time <= 150):
+            insertions = 0
+            while (insertions < len(self.customers)):
                 bestInsertion = CustomerInsertion()
                 lastRoute: Route = self.GetLastOpenRoute()
-                total_route_time += 50
+               
                 if lastRoute is not None:
                     self.IdentifyBestInsertion(bestInsertion, lastRoute)
                 if (bestInsertion.customer is not None):
                     self.ApplyCustomerInsertion(bestInsertion)
-                    #total_route_time += 50
                     insertions += 1
                 else:
                     if lastRoute is not None and len(lastRoute.sequenceOfNodes) == 1:
