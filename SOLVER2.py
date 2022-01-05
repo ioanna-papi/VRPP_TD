@@ -59,7 +59,7 @@ class TwoOptMove(object):
         self.positionOfSecondNode = None
         self.moveCost = 10 ** 9
 
-class Solver:
+class Solver2:
     
     def __init__(self, m):
         self.allNodes = m.allNodes
