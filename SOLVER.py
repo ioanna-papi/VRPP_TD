@@ -96,9 +96,7 @@ class Solver:
         self.bestSolution = Solution()
         self.route = None
         
-        
-     def ApplyBestNodeMethod(self):
-
+    def ApplyBestNodeMethod(self):
         for r in range(5):
             self.route = Route(150)
             node = 0
