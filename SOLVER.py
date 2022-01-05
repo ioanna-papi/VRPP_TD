@@ -145,9 +145,10 @@ class Solver:
                 
                 if (rt.sequenceOfNodes[j].ID != 0):
                     print(rt.sequenceOfNodes[j].ID, end=' ', )
-            print(rt.sequenceOfNodes[0].ID, end=' ', )    
+               
                 f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
             f.write("\n")
+            print(rt.sequenceOfNodes[0].ID, end=' ', )
             print("\n")
         solution = self.objective(self.sol)
         f.write("This is the final objective: %d" % (solution))
