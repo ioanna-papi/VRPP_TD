@@ -3,8 +3,8 @@ from SolutionDrawer import *
 
 class Solution:
     def __init__(self):
-        self.profit = 0
-        self.cost = 0
+        self.profit = 0.0
+        self.cost = 0.0
         self.routes = []
 
 class CustomerInsertion(object):
