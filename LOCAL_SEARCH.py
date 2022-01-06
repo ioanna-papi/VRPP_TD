@@ -348,7 +348,7 @@ class Solver:
         for i in range (0, len(self.sol.sequenceOfNodes) - 1):
             A: Node = self.sol.sequenceOfNodes[i]
             B: Node = self.sol.sequenceOfNodes[i + 1]
-            tc += self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID]
+            tc += self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time
 
         if abs (self.sol.time - tc) > 0.0001:
             print('Problem!!!')
