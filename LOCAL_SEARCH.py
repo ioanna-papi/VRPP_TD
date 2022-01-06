@@ -201,7 +201,7 @@ class Solver:
 
             self.TestSolution()
 
-            if (self.sol.cost < self.bestSolution.cost):
+            if (self.sol.time < self.bestSolution.time):
                 self.bestSolution = self.cloneSolution(self.sol)
 
             localSearchIterator = localSearchIterator + 1
@@ -274,21 +274,20 @@ class Solver:
 
                         if (rt1.sequenceOfNodes[originNodeIndex] == rt1.sequenceOfNodes[-1]):
                             if (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
-                                costAdded = self.distanceMatrix[F.ID][B.ID]
-                                costRemoved = self.distanceMatrix[A.ID][B.ID]
-                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID]
-                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID]
-                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID]
-                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID]
+                                costAdded = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
+                                costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time
+                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
+                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
+                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
+                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
                             else:
-                                costAdded = self.distanceMatrix[F.ID][B.ID] + self.distanceMatrix[B.ID][G.ID]
-                                costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[F.ID][G.ID]
-                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID]
-                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.distanceMatrix[B.ID][G.ID] - \
-                                                     self.distanceMatrix[F.ID][G.ID]
-                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID]
-                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.timeMatrix[B.ID][G.ID] - \
-                                                     self.timeMatrix[F.ID][G.ID]
+                                costAdded = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
+                                costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
+                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
+                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
+                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
+                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.timeMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.timeMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
+                                                    
 
                         elif (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
                             costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[F.ID][B.ID]
