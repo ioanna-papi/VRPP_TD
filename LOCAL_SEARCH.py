@@ -199,43 +199,6 @@ class Solver:
 
             SolDrawer.draw(str(localSearchIterator), self.sol, self.allNodes)
 
-            # Relocations
-        
-                self.FindBestRelocationMove(rm)
-                if rm.positionOfRelocated is not None:
-                    if rm.moveCost < 0:
-                        self.ApplyRelocationMove(rm)
-                    else:
-                        terminationCondition = True
-            # Swaps
-            
-                self.FindBestSwapMove(sm)
-                if sm.positionOfFirst is not None:
-                    if sm.moveCost < 0:
-                        self.ApplySwapMove(sm)
-                    else:
-                        terminationCondition = True
-            
-            
-            # Insertions
-            
-                #self.FindBestInsertionMove(im)
-                if im.positionOfFirst is not None:
-                    if im.moveCost < 0:
-                        self.ApplySwapMove(im)
-                    else:
-                        terminationCondition = True    
-                
-                
-            # Profitable Swaps
-            
-                #self.FindBestInsertionMove(psm)
-                if psm.positionOfFirst is not None:
-                    if psm.moveCost < 0:
-                        self.ApplySwapMove(psm)
-                    else:
-                        terminationCondition = True 
-                
                 
             self.TestSolution()
 
