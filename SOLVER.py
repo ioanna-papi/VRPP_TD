@@ -155,7 +155,7 @@ class Solver:
             print(rt.sequenceOfNodes[0].ID, end=' ', )
             print("\n")
         solution = self.objective(self.sol)
-        print("TOTAL PROFIT")
+        print("TOTAL PROFIT = "," ", solution)
         f.write("This is the final objective: %d" % (solution))
         f.close()
         SolDrawer.draw('final_Solution_8180099', self.sol, self.allNodes)
