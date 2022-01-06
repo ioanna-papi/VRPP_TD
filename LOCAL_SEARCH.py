@@ -69,20 +69,16 @@ class SwapMove(object):
         self.time2 = None
         self.moveCost = 10 ** 9
 
-class TwoOptMove(object):
+class InsertionMove(object):        
     def __init__(self):
-        self.positionOfFirstRoute = None
-        self.positionOfSecondRoute = None
-        self.positionOfFirstNode = None
-        self.positionOfSecondNode = None
-        self.moveCost = None
-
+        
     def Initialize(self):
-        self.positionOfFirstRoute = None
-        self.positionOfSecondRoute = None
-        self.positionOfFirstNode = None
-        self.positionOfSecondNode = None
-        self.moveCost = 10 ** 9
+        
+class ProfitableSwapMove(object):        
+    def __init__(self):
+        
+    def Initialize(self):
+         
 
 # Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
 class Solver:
@@ -139,6 +135,7 @@ class Solver:
             self.route.time_limit -= total_time
             self.sol.routes.append(self.route)
             self.sol.profit += total_profit
+            self.sol.time += total_time
         
         print(" ")
         f = open("AllRoutes_8180099.txt", "w+")
@@ -180,3 +177,205 @@ class Solver:
         return total_profit
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας        
+
+def LocalSearch(self, operator):
+        self.bestSolution = self.cloneSolution(self.sol)
+        self.TestSolution()
+        terminationCondition = False
+        localSearchIterator = 1
+
+        rm = RelocationMove()
+        sm = SwapMove()
+        im = InsertionMove()
+        psm = ProfitableSwapMove()
+
+        while terminationCondition is False:
+            rm.Initialize()
+            sm.Initialize()
+            im.Initialize()
+            psm.Initialize()
+
+            SolDrawer.draw(str(localSearchIterator), self.sol, self.allNodes)
+
+            # Relocations
+            if operator == 0:
+                self.FindBestRelocationMove(rm)
+                if rm.positionOfRelocated is not None:
+                    if rm.moveCost < 0:
+                        self.ApplyRelocationMove(rm)
+                    else:
+                        terminationCondition = True
+            # Swaps
+            elif operator == 1:
+                self.FindBestSwapMove(sm)
+                if sm.positionOfFirst is not None:
+                    if sm.moveCost < 0:
+                        self.ApplySwapMove(sm)
+                    else:
+                        terminationCondition = True
+            
+            
+            # Insertions
+            elif operator == 2:
+                self.FindBestInsertionMove(im)
+                if im.positionOfFirst is not None:
+                    if im.moveCost < 0:
+                        self.ApplySwapMove(im)
+                    else:
+                        terminationCondition = True    
+                
+                
+            # Profitable Swaps
+            elif operator == 3:
+                self.FindBestInsertionMove(psm)
+                if psm.positionOfFirst is not None:
+                    if psm.moveCost < 0:
+                        self.ApplySwapMove(psm)
+                    else:
+                        terminationCondition = True 
+                
+                
+            self.TestSolution()
+
+            if (self.sol.cost < self.bestSolution.cost):
+                self.bestSolution = self.cloneSolution(self.sol)
+
+            localSearchIterator = localSearchIterator + 1
+
+        self.sol = self.bestSolution
+    
+    def cloneRoute(self, rt: Route):
+        cloned = Route(self.allNodes[0], rt.time_limit)
+        cloned.time = rt.time
+        cloned.profit = rt.profit
+        cloned.time_limit = rt.time_limit
+        cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
+        return cloned
+    
+    def cloneSolution(self, sol: Solution):
+        cloned = Solution()
+        cloned.sequenceOfNodes = self.sol.sequenceOfNodes.copy()
+        cloned.cost = self.sol.time
+        return cloned
+
+    def FindBestRelocationMove(self, rm):
+
+        for relIndex in range(1, len(self.sol.sequenceOfNodes) - 1):
+            A:Node = self.sol.sequenceOfNodes[relIndex - 1]
+            B = self.sol.sequenceOfNodes[relIndex]
+            C = self.sol.sequenceOfNodes[relIndex + 1]
+
+            for afterIndex in range(0, len(self.sol.sequenceOfNodes) - 1):
+
+                if afterIndex != relIndex and afterIndex != relIndex - 1:
+
+                    F = self.sol.sequenceOfNodes[afterIndex]
+                    G = self.sol.sequenceOfNodes[afterIndex + 1]
+
+                    costRemoved1 = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time
+                    costRemoved2 = self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
+
+                    costAdded1 = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time
+                    costAdded2 = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
+
+                    moveCost = costAdded1 + costAdded2 - costRemoved1 - costRemoved2
+
+                    if moveCost < rm.moveCost:
+                        rm.moveCost = moveCost
+                        rm.positionOfRelocated = relIndex
+                        rm.positionToBeInserted = afterIndex
+
+    def FindBestSwapMove(self, sm):
+        for firstIndex in range(1, len(self.sol.sequenceOfNodes) - 1):
+            A = self.sol.sequenceOfNodes[firstIndex - 1]
+            B = self.sol.sequenceOfNodes[firstIndex]
+            C = self.sol.sequenceOfNodes[firstIndex + 1]
+
+            for secondIndex in range (firstIndex + 1, len(self.sol.sequenceOfNodes) -1):
+                D = self.sol.sequenceOfNodes[secondIndex - 1]
+                E = self.sol.sequenceOfNodes[secondIndex]
+                F = self.sol.sequenceOfNodes[secondIndex + 1]
+
+                if (secondIndex == firstIndex + 1):
+                    costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID] + self.distanceMatrix[C.ID][F.ID]
+                    costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[C.ID][B.ID] + self.distanceMatrix[B.ID][F.ID]
+                else:
+                    costRemoved1 = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID]
+                    costAdded1 = self.distanceMatrix[A.ID][E.ID] + self.distanceMatrix[E.ID][C.ID]
+                    costRemoved2 = self.distanceMatrix[D.ID][E.ID] + self.distanceMatrix[E.ID][F.ID]
+                    costAdded2 = self.distanceMatrix[D.ID][B.ID] + self.distanceMatrix[B.ID][F.ID]
+                    costAdded = costAdded1 + costAdded2
+                    costRemoved = costRemoved1 + costRemoved2
+
+                moveCost = costAdded - costRemoved
+
+                if moveCost < sm.moveCost:
+                    sm.moveCost = moveCost
+                    sm.positionOfFirst = firstIndex
+                    sm.positionOfSecond = secondIndex
+
+    def ApplyRelocationMove(self, rm):
+        relocatedNode = self.sol.sequenceOfNodes[rm.positionOfRelocated]
+        #self.sol.sequenceOfNodes:list.remove(relocatedNode)
+        del self.sol.sequenceOfNodes[rm.positionOfRelocated]
+
+        if rm.positionToBeInserted < rm.positionOfRelocated:
+            self.sol.sequenceOfNodes.insert(rm.positionToBeInserted + 1, relocatedNode)
+        else:
+            self.sol.sequenceOfNodes.insert(rm.positionToBeInserted, relocatedNode)
+
+        self.sol.time = self.sol.time + rm.moveCost
+
+
+    def ApplySwapMove(self, sm):
+        firstNode = self.sol.sequenceOfNodes[sm.positionOfFirst]
+        secondNode = self.sol.sequenceOfNodes[sm.positionOfSecond]
+        self.sol.sequenceOfNodes[sm.positionOfFirst] = secondNode
+        self.sol.sequenceOfNodes[sm.positionOfSecond] = firstNode
+
+        self.sol.time = self.sol.time + sm.moveCost
+
+    def ReportSolution(self, sol):
+        for i in range(0, len(sol.sequenceOfNodes)):
+            print(sol.sequenceOfNodes[i].ID, end=' ')
+        print(sol.cost)
+
+   
+    def TestSolution(self):
+        tc = 0
+        for i in range (0, len(self.sol.sequenceOfNodes) - 1):
+            A: Node = self.sol.sequenceOfNodes[i]
+            B: Node = self.sol.sequenceOfNodes[i + 1]
+            tc += self.distanceMatrix[A.ID][B.ID]
+
+        if abs (self.sol.cost - tc) > 0.0001:
+            print('Problem!!!')
+
+    def BuildExampleSolution(self):
+        self.sol = Solution()
+        self.sol.sequenceOfNodes.append(self.allNodes[0])
+        self.sol.sequenceOfNodes.append(self.allNodes[3])
+        self.sol.sequenceOfNodes.append(self.allNodes[6])
+        self.sol.sequenceOfNodes.append(self.allNodes[2])
+        self.sol.sequenceOfNodes.append(self.allNodes[5])
+        self.sol.sequenceOfNodes.append(self.allNodes[1])
+        self.sol.sequenceOfNodes.append(self.allNodes[4])
+        self.sol.sequenceOfNodes.append(self.allNodes[0])
+
+        self.sol.cost = 0
+        for i in range (0, len(self.sol.sequenceOfNodes) - 1):
+            n1 = self.sol.sequenceOfNodes[i]
+            n2 = self.sol.sequenceOfNodes[i + 1]
+            self.sol.cost += self.distanceMatrix[n1.ID][n2.ID]
+
+        a = 0
+
+
+
+
+
+
+
+
+
+
