@@ -142,10 +142,12 @@ class Solver:
         
         print(" ")
         f = open("AllRoutes_8180099.txt", "w+")
+        counter = 1
         for i in range(len(self.sol.routes)):
             rt: Route = self.sol.routes[i]
             f.write("This is route: \n")
-            print(rt.sequenceOfNodes[0].ID, end=' ', )
+            print('Route ", counter,"=", rt.sequenceOfNodes[0].ID, end=' ', )
+            counter +=1
             for j in range(len(rt.sequenceOfNodes)):
                 
                 if (rt.sequenceOfNodes[j].ID != 0):
