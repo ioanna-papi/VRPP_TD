@@ -6,5 +6,5 @@ s = Solver(m)
 #sol = s.solve()
 
 solution = s.ApplyBestNodeMethod()
-print(s.objective(solution))
+#print(s.objective(solution))
 print()
