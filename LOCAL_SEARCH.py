@@ -69,15 +69,15 @@ class SwapMove(object):
         self.time2 = None
         self.moveCost = 10 ** 9
 
-class InsertionMove(object):        
-    def __init__(self):
+#class InsertionMove(object):        
+    #def __init__(self):
         
-    def Initialize(self):
+    #def Initialize(self):
         
-class ProfitableSwapMove(object):        
-    def __init__(self):
+#class ProfitableSwapMove(object):        
+    #def __init__(self):
         
-    def Initialize(self):
+    #def Initialize(self):
          
 
 # Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
@@ -186,14 +186,14 @@ def LocalSearch(self, operator):
 
         rm = RelocationMove()
         sm = SwapMove()
-        im = InsertionMove()
-        psm = ProfitableSwapMove()
+        #im = InsertionMove()
+        #psm = ProfitableSwapMove()
 
         while terminationCondition is False:
             rm.Initialize()
             sm.Initialize()
-            im.Initialize()
-            psm.Initialize()
+            #im.Initialize()
+            #psm.Initialize()
 
             SolDrawer.draw(str(localSearchIterator), self.sol, self.allNodes)
 
@@ -217,7 +217,7 @@ def LocalSearch(self, operator):
             
             # Insertions
             elif operator == 2:
-                self.FindBestInsertionMove(im)
+                #self.FindBestInsertionMove(im)
                 if im.positionOfFirst is not None:
                     if im.moveCost < 0:
                         self.ApplySwapMove(im)
@@ -227,7 +227,7 @@ def LocalSearch(self, operator):
                 
             # Profitable Swaps
             elif operator == 3:
-                self.FindBestInsertionMove(psm)
+                #self.FindBestInsertionMove(psm)
                 if psm.positionOfFirst is not None:
                     if psm.moveCost < 0:
                         self.ApplySwapMove(psm)
