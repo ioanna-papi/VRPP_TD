@@ -290,29 +290,21 @@ class Solver:
                                                     
 
                         elif (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
-                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[F.ID][B.ID]
-                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID]
-                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] - self.distanceMatrix[A.ID][B.ID] - \
-                                                 self.distanceMatrix[B.ID][C.ID]
-                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID]
-                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] - self.timeMatrix[A.ID][B.ID] - \
-                                                 self.timeMatrix[B.ID][C.ID]
-                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID]
+                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
+                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time
+                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
+                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
+                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.timeMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
+                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
 
                         else:
-                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[F.ID][B.ID] + \
-                                        self.distanceMatrix[B.ID][G.ID]
-                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID] + \
-                                          self.distanceMatrix[F.ID][G.ID]
+                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
+                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
 
-                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] - self.distanceMatrix[A.ID][B.ID] - \
-                                                 self.distanceMatrix[B.ID][C.ID]
-                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.distanceMatrix[B.ID][G.ID] - \
-                                                 self.distanceMatrix[F.ID][G.ID]
-                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] - self.timeMatrix[A.ID][B.ID] - \
-                                                 self.timeMatrix[B.ID][C.ID]
-                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.timeMatrix[B.ID][G.ID] - \
-                                                 self.timeMatrix[F.ID][G.ID]
+                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
+                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
+                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.timeMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
+                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.timeMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.timeMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
 
                         if rt1 != rt2:
                             if rt2.load + B.demand > rt2.capacity:
