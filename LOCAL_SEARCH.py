@@ -180,7 +180,7 @@ class Solver:
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας        
 
-    def LocalSearch(self, operator):
+    def LocalSearch(self):
         self.bestSolution = self.cloneSolution(self.sol)
         self.TestSolution()
         terminationCondition = False
@@ -200,7 +200,7 @@ class Solver:
             SolDrawer.draw(str(localSearchIterator), self.sol, self.allNodes)
 
             # Relocations
-            if operator == 0:
+        
                 self.FindBestRelocationMove(rm)
                 if rm.positionOfRelocated is not None:
                     if rm.moveCost < 0:
@@ -208,7 +208,7 @@ class Solver:
                     else:
                         terminationCondition = True
             # Swaps
-            elif operator == 1:
+            
                 self.FindBestSwapMove(sm)
                 if sm.positionOfFirst is not None:
                     if sm.moveCost < 0:
@@ -218,7 +218,7 @@ class Solver:
             
             
             # Insertions
-            elif operator == 2:
+            
                 #self.FindBestInsertionMove(im)
                 if im.positionOfFirst is not None:
                     if im.moveCost < 0:
@@ -228,7 +228,7 @@ class Solver:
                 
                 
             # Profitable Swaps
-            elif operator == 3:
+            
                 #self.FindBestInsertionMove(psm)
                 if psm.positionOfFirst is not None:
                     if psm.moveCost < 0:
