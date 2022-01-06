@@ -239,7 +239,7 @@ class Solver:
                 
             self.TestSolution()
 
-            if (self.sol.cost < self.bestSolution.cost):
+            if (self.sol.time < self.bestSolution.time):
                 self.bestSolution = self.cloneSolution(self.sol)
 
             localSearchIterator = localSearchIterator + 1
