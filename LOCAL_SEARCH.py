@@ -6,7 +6,8 @@ class Solution:
         self.profit = 0.0
         self.time = 0.0
         self.routes = []
-
+        self.sequenceOfNodes = []
+        
 class CustomerInsertion(object):
     def __init__(self):
         self.customer = None
@@ -121,6 +122,7 @@ class Solver:
                     
                 elif (total_time + (self.distanceMatrix[node][position] +  self.allNodes[position].service_time) <= 150):
                     self.route.sequenceOfNodes.append(self.allNodes[position])
+                    self.sol.sequenceOfNodes.append(self.allNodes[position])
                     self.allNodes[position].isRouted = True
                     a = self.allNodes[position]
                     total_profit += a.profit
