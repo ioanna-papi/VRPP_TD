@@ -8,3 +8,8 @@ m.BuildModel()
 s = Solver(m)
 solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
+
+print("Local Search")
+solution2 = s.LocalSearch()
+print(s.objective(solution2))
+print()
