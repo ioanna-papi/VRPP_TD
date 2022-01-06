@@ -146,7 +146,7 @@ class Solver:
         for i in range(len(self.sol.routes)):
             rt: Route = self.sol.routes[i]
             f.write("This is route: \n")
-            print("Route ", counter,"=", rt.sequenceOfNodes[0].ID, end=' ', )
+            print(" Route ", counter,"=", rt.sequenceOfNodes[0].ID, end=' ', )
             counter +=1
             for j in range(len(rt.sequenceOfNodes)):
                 
@@ -157,7 +157,7 @@ class Solver:
             print(rt.sequenceOfNodes[0].ID, end=' ', )
             print("\n")
         solution = self.objective(self.sol)
-        print("        TOTAL PROFIT =", solution)
+        print(" TOTAL PROFIT =", solution)
         f.write("This is the final objective: %d" % (solution))
         f.close()
         SolDrawer.draw('final_Solution_8180099', self.sol, self.allNodes)
