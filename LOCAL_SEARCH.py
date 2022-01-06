@@ -255,7 +255,7 @@ def LocalSearch(self, operator):
     def cloneSolution(self, sol: Solution):
         cloned = Solution()
         cloned.sequenceOfNodes = self.sol.sequenceOfNodes.copy()
-        cloned.cost = self.sol.time
+        cloned.time = self.sol.time
         return cloned
 
     def FindBestRelocationMove(self, rm):
@@ -297,13 +297,13 @@ def LocalSearch(self, operator):
                 F = self.sol.sequenceOfNodes[secondIndex + 1]
 
                 if (secondIndex == firstIndex + 1):
-                    costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID] + self.distanceMatrix[C.ID][F.ID]
-                    costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[C.ID][B.ID] + self.distanceMatrix[B.ID][F.ID]
+                    costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[C.ID][F.ID] + self.customers[F.ID].service_time
+                    costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[C.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][F.ID] + self.customers[F.ID].service_time
                 else:
-                    costRemoved1 = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID]
-                    costAdded1 = self.distanceMatrix[A.ID][E.ID] + self.distanceMatrix[E.ID][C.ID]
-                    costRemoved2 = self.distanceMatrix[D.ID][E.ID] + self.distanceMatrix[E.ID][F.ID]
-                    costAdded2 = self.distanceMatrix[D.ID][B.ID] + self.distanceMatrix[B.ID][F.ID]
+                    costRemoved1 = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time
+                    costAdded1 = self.distanceMatrix[A.ID][E.ID] + self.customers[E.ID].service_time + self.distanceMatrix[E.ID][C.ID] + self.customers[C.ID].service_time
+                    costRemoved2 = self.distanceMatrix[D.ID][E.ID] + self.customers[E.ID].service_time + self.distanceMatrix[E.ID][F.ID] + self.customers[F.ID].service_time
+                    costAdded2 = self.distanceMatrix[D.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][F.ID] + self.customers[F.ID].service_time
                     costAdded = costAdded1 + costAdded2
                     costRemoved = costRemoved1 + costRemoved2
 
@@ -338,7 +338,7 @@ def LocalSearch(self, operator):
     def ReportSolution(self, sol):
         for i in range(0, len(sol.sequenceOfNodes)):
             print(sol.sequenceOfNodes[i].ID, end=' ')
-        print(sol.cost)
+        print(sol.time)
 
    
     def TestSolution(self):
@@ -346,9 +346,9 @@ def LocalSearch(self, operator):
         for i in range (0, len(self.sol.sequenceOfNodes) - 1):
             A: Node = self.sol.sequenceOfNodes[i]
             B: Node = self.sol.sequenceOfNodes[i + 1]
-            tc += self.distanceMatrix[A.ID][B.ID]
+            tc += self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID]
 
-        if abs (self.sol.cost - tc) > 0.0001:
+        if abs (self.sol.time - tc) > 0.0001:
             print('Problem!!!')
 
     def BuildExampleSolution(self):
@@ -362,13 +362,13 @@ def LocalSearch(self, operator):
         self.sol.sequenceOfNodes.append(self.allNodes[4])
         self.sol.sequenceOfNodes.append(self.allNodes[0])
 
-        self.sol.cost = 0
+        self.sol.time = 0.0
         for i in range (0, len(self.sol.sequenceOfNodes) - 1):
             n1 = self.sol.sequenceOfNodes[i]
             n2 = self.sol.sequenceOfNodes[i + 1]
-            self.sol.cost += self.distanceMatrix[n1.ID][n2.ID]
+            self.sol.time += self.distanceMatrix[n1.ID][n2.ID] + self.customers[n2.ID]
 
-        a = 0
+     
 
 
 
