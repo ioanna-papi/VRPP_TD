@@ -1,10 +1,12 @@
 from SOLVER import *
 
+# 1ο Ερώτημα
 m = Model()
 m.BuildModel()
-s = Solver(m)
-#sol = s.solve()
 
+# 2ο Ερώτημα
+s = Solver(m)
 solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
 print()
+
