@@ -178,7 +178,7 @@ class Solver:
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας        
 
-def LocalSearch(self, operator):
+    def LocalSearch(self, operator):
         self.bestSolution = self.cloneSolution(self.sol)
         self.TestSolution()
         terminationCondition = False
