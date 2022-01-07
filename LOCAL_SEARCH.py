@@ -341,7 +341,7 @@ class Solver:
                 c += self.distanceMatrix[a.ID][b.ID] + self.customers[b.ID].service_time
         return c
 
-    
+    # Swap
     def FindBestSwapMove(self, sm):
         for firstRouteIndex in range(0, len(self.sol.routes)):
             rt1:Route = self.sol.routes[firstRouteIndex]
@@ -361,8 +361,6 @@ class Solver:
                         b2 = rt2.sequenceOfNodes[secondNodeIndex]
                         c2 = rt2.sequenceOfNodes[secondNodeIndex + 1]
 
-
-
                         moveCost = None
                         costChangeFirstRoute = None
                         costChangeSecondRoute = None
@@ -379,12 +377,8 @@ class Solver:
                                 costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.distanceMatrix[b2.ID][c2.ID]
                                 costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.distanceMatrix[b1.ID][c2.ID]
                                 moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
-                        else:
-                            if rt1.load - b1.demand + b2.demand > self.capacity:
-                                continue
-                            if rt2.load - b2.demand + b1.demand > self.capacity:
-                                continue
-
+                         
+                         else:
                             costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.distanceMatrix[b1.ID][c1.ID]
                             costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.distanceMatrix[b2.ID][c1.ID]
                             costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.distanceMatrix[b2.ID][c2.ID]
@@ -392,8 +386,21 @@ class Solver:
 
                             costChangeFirstRoute = costAdded1 - costRemoved1
                             costChangeSecondRoute = costAdded2 - costRemoved2
+                            
+                            if rt1 != rt2:
+                                rttime1 = rt1.time + costChangeFirstRoute
+                                rttime2 = rt2.time + costChangeSecondRoute
+                                if rttime1 <= 150:
+                                    continue
+                                if rttime2 <= 150:
+                                    continue
+                             elif rt1 == rt2:
+                                rtfull = rt1.time + costChangeFirstRoute + costChangeSecondRoute
+                                if rtfull <= 150:
+                                    continue
 
                             moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                            
                         if moveCost < sm.moveCost and abs(moveCost) > 0.0001:
                             self.StoreBestSwapMove(firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, sm)
 
