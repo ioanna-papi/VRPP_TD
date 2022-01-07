@@ -295,8 +295,8 @@ class Solver:
                             if rt1time <= 150:
                                 continue
                             if rt2time <= 150:
-                                continue
-                         elif rt1 == rt2:
+                                continue 
+                        elif (rt1 == rt2):
                             rtfull = rt1.time + originRtCostChange + targetRtCostChange
                             if rtfull <= 150:
                                 continue
