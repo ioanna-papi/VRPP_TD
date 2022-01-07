@@ -283,17 +283,13 @@ class Solver:
                         F = rt2.sequenceOfNodes[targetNodeIndex]
                         G = rt2.sequenceOfNodes[targetNodeIndex + 1]
 
-                        #costAdded = self.distanceMatrix[A.ID][C.ID] + self.allNodes[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.allNodes[G.ID].service_time
-                        #costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.allNodes[C.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.allNodes[G.ID].service_time
+                        costAdded = self.distanceMatrix[A.ID][C.ID] + self.allNodes[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.allNodes[G.ID].service_time
+                        costRemoved = self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.allNodes[C.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.allNodes[G.ID].service_time
 
-                        #originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.allNodes[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.allNodes[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.allNodes[C.ID].service_time
-                        #targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.allNodes[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.allNodes[G.ID].service_time
+                        originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.allNodes[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.allNodes[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.allNodes[C.ID].service_time
+                        targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.allNodes[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.allNodes[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.allNodes[G.ID].service_time
                         
-                        costAdded = self.distanceMatrix[A.ID][C.ID] + self.distanceMatrix[F.ID][B.ID] +  self.distanceMatrix[B.ID][G.ID] 
-                        costRemoved = self.distanceMatrix[A.ID][B.ID] + self.distanceMatrix[B.ID][C.ID] +  self.distanceMatrix[F.ID][G.ID]
-                        originRtCostChange = self.distanceMatrix[A.ID][C.ID] - self.distanceMatrix[A.ID][B.ID]  - self.distanceMatrix[B.ID][C.ID]
-                        targetRtCostChange = self.distanceMatrix[F.ID][B.ID]  + self.distanceMatrix[B.ID][G.ID] - self.distanceMatrix[F.ID][G.ID] 
-                        
+                    
                         if rt1 != rt2:
                             rt1time = rt1.time + originRtCostChange
                             rt2time = rt2.time + targetRtCostChange
