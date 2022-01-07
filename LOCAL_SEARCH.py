@@ -487,7 +487,7 @@ class Solver:
             for n in range (0 , len(rt.sequenceOfNodes) - 1):
                 A = rt.sequenceOfNodes[n]
                 B = rt.sequenceOfNodes[n + 1]
-                rtTime += (self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time)
+                rtTime += (self.distanceMatrix[A.ID][B.ID] + self.allNodes[B.ID].service_time)
                 rtProfit += A.profit
             if abs(rtTime - rt.time) > 0.0001:
                 print ('Route Cost problem')
