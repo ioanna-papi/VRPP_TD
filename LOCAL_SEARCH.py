@@ -75,10 +75,28 @@ class SwapMove(object):
         
     #def Initialize(self):
         
-#class ProfitableSwapMove(object):        
-    #def __init__(self):
-        
-    #def Initialize(self):
+class ProfitableSwapMove(object):
+    def __init__(self):
+        self.positionOfFirstRoute = None
+        self.positionOfSecondRoute = None
+        self.positionOfFirstNode = None
+        self.positionOfSecondNode = None
+        self.distChangeFirstRt = None
+        self.distChangeSecondRt = None
+        self.time1 = None
+        self.time2 = None
+        self.moveCost = None
+
+    def Initialize(self):
+        self.positionOfFirstRoute = None
+        self.positionOfSecondRoute = None
+        self.positionOfFirstNode = None
+        self.positionOfSecondNode = None
+        self.distChangeFirstRt = None
+        self.distChangeSecondRt = None
+        self.time1 = None
+        self.time2 = None
+        self.moveCost = 10 ** 9
          
 
 # Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
@@ -178,7 +196,7 @@ class Solver:
             total_profit += pr
         return total_profit
    
-# Ερώτημα Γ - 4 Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
+# Ερώτημα Γ - Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
     def LocalSearch(self):
         self.bestSolution = self.cloneSolution(self.sol)
         terminationCondition = False
