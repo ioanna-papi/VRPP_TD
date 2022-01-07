@@ -82,7 +82,7 @@ class SwapMove(object):
          
 
 # Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
-class Solver:
+class Solver2:
     def __init__(self, m):
         self.allNodes = m.allNodes
         self.depot = m.allNodes[0]
@@ -180,7 +180,7 @@ class Solver:
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας        
 
-    def LocalSearch(self):
+    def LocalSearch2(self):
         self.bestSolution = self.cloneSolution(self.sol)
         self.TestSolution()
         terminationCondition = False
