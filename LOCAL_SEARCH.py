@@ -467,7 +467,7 @@ class Solver:
             for j in range (0, len(rt.sequenceOfNodes) - 1):
                 a = rt.sequenceOfNodes[j]
                 b = rt.sequenceOfNodes[j + 1]
-                c += self.distanceMatrix[a.ID][b.ID] + self.customers[b.ID].service_time
+                c += self.distanceMatrix[a.ID][b.ID] + self.allNodes[b.ID].service_time
         return c
     
     def ReportSolution(self, sol):
