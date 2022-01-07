@@ -290,12 +290,9 @@ class Solver:
 
                         return rm.originRoutePosition
         
-
-                            
-                            
+                
     def ApplyRelocationMove(self, rm: RelocationMove):
-
-        oldCost = self.objective(self.sol)
+        oldCost = self.CalculateTotalCost(self.sol)
 
         originRt = self.sol.routes[rm.originRoutePosition]
         targetRt = self.sol.routes[rm.targetRoutePosition]
@@ -309,31 +306,20 @@ class Solver:
             else:
                 targetRt.sequenceOfNodes.insert(rm.targetNodePosition + 1, B)
 
-            originRt.time += rm.originRtTimeChange + rm.targetRtTimeChange
-            originRt.distance += rm.moveCost
+            originRt.time += rm.moveCost
         else:
             del originRt.sequenceOfNodes[rm.originNodePosition]
             targetRt.sequenceOfNodes.insert(rm.targetNodePosition + 1, B)
-            originRt.distance += rm.costChangeOriginRt
-            targetRt.distance += rm.costChangeTargetRt
-            originRt.load -= B.demand
-            targetRt.load += B.demand
-            originRt.time += rm.originRtTimeChange
-            targetRt.time += rm.targetRtTimeChange
+            originRt.time += rm.costChangeOriginRt
+            targetRt.time += rm.costChangeTargetRt
+            originRt.profit -= B.profit
+            targetRt.profit += B.profit
 
-        self.sol.cost += rm.moveCost
-
-        # This is an alternative way of checking the solution.
-        # newCost = self.objective(self.sol)
-        # print(newCost,oldCost,rm.moveCost)
-        # # debuggingOnly
-        # if abs((newCost - oldCost) - rm.moveCost) > 0.0001:
-        #     print('Cost Issue')
+        self.sol.time += rm.moveCost    
         self.TestSolution()
 
-    def StoreBestRelocationMove(self, originRouteIndex, targetRouteIndex, originNodeIndex, targetNodeIndex, moveCost,
-                                originRtCostChange, targetRtCostChange, originRtTimeChange, targetRtTimeChange,
-                                rm: RelocationMove):
+        
+    def StoreBestRelocationMove(self, originRouteIndex, targetRouteIndex, originNodeIndex, targetNodeIndex, moveCost, originRtCostChange, targetRtCostChange, rm:RelocationMove):
         rm.originRoutePosition = originRouteIndex
         rm.originNodePosition = originNodeIndex
         rm.targetRoutePosition = targetRouteIndex
@@ -341,14 +327,33 @@ class Solver:
         rm.costChangeOriginRt = originRtCostChange
         rm.costChangeTargetRt = targetRtCostChange
         rm.moveCost = moveCost
-        rm.originRtTimeChange = originRtTimeChange
-        rm.targetRtTimeChange = targetRtTimeChange
 
+    def InitializeRm(self, rm):
+        rm.Initialize()
+    
+    def CalculateTotalCost(self, sol):
+        c = 0
+        for i in range (0, len(sol.routes)):
+            rt = sol.routes[i]
+            for j in range (0, len(rt.sequenceOfNodes) - 1):
+                a = rt.sequenceOfNodes[j]
+                b = rt.sequenceOfNodes[j + 1]
+                c += self.distanceMatrix[a.ID][b.ID] + self.customers[b.ID].service_time
+        return c
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     def InitializeOperators(self, rm, sm, top):
         rm.Initialize()
         sm.Initialize()
         top.Initialize()
 
-    def InitializeRm(self, rm):
-        rm.Initialize()
    
