@@ -22,7 +22,15 @@ class CustomerInsertionAllPositions(object):
         self.insertionPosition = None
         self.profit = -(10 ** 9)
         self.time = 10 ** 9
+        self.moveCost = None
         
+    def Initialize(self):
+        self.customer = None
+        self.route = None
+        self.insertionPosition = None
+        self.profit = -(10 ** 9)
+        self.time = 10 ** 9
+        self.moveCost = 10 ** 9
         
 class RelocationMove(object):
     def __init__(self):
@@ -210,6 +218,7 @@ class Solver:
         counter = 0
         rm = RelocationMove()
         sm = SwapMove()
+        im = CustomerInsertionAllPositions()
         localSearchIterator = 0
         
         while terminationCondition is False:
@@ -496,11 +505,44 @@ class Solver:
       
     def InitializeSm(self, sm):
         sm.Initialize()
+    
+    # Insertion
+    def FindBestInsertionAllPositions(self, im):
+        for firstInd in range(0, len(self.sol.routes)):
+            rt1:Route = self.sol.routes[firstInd]
+            for i in range(0, len(self.customers)):
+                candidateCust: Node = self.customers[i]
+                if candidateCust.isRouted is False:
+                    if (rt1.time + self.distanceMatrix[firstInd][candidateCust.ID] + allNodes[candidateCust.ID].service_time) <= 150:
+                        lastNodePresentInTheRoute = rt.sequenceOfNodes[-2]
+                        for j in range(0, len(rt1.sequenceOfNodes) - 1):
+                            A = rt1.sequenceOfNodes[j]
+                            B = rt1.sequenceOfNodes[j + 1]
+                            costAdded = self.distanceMatrix[A.ID][candidateCust.ID] + allNodes[candidateCust.ID].service_time + self.distanceMatrix[candidateCust.ID][B.ID] + allNodes[B.ID].service_time
+                            costRemoved = self.distanceMatrix[A.ID][B.ID] + allNodes[B.ID].service_time
+                            moveCost = costAdded - costRemoved
+
+                            if moveCost < im.time and abs(moveCost) > 0.0001:
+                                im.customer = candidateCust
+                                im.route = rt
+                                im.time = moveCost
+                                im.insertionPosition = j
         
         
-        
-        
-        
+    def ApplyCustomerInsertionAllPositions(self, im):
+        insCustomer = im.customer
+        rt = im.route
+        # before the second depot occurrence
+        insIndex = im.insertionPosition
+        rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
+        rt.time += insertion.time
+        self.sol.time += insertion.time
+        rt.profit += insCustomer.profit
+        self.sol.profit += insertion.profit
+        insCustomer.isRouted = True
+    
+    
+    
     def CalculateTotalCost(self, sol):
         c = 0
         for i in range (0, len(sol.routes)):
