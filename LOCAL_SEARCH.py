@@ -201,7 +201,7 @@ class Solver:
             self.sol.routes[i].time = t
             total_time += t
             total_profit += pr
-        return total_profit
+        return total_profit, total_time
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
     def LocalSearch(self):
