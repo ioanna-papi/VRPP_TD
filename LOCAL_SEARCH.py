@@ -231,26 +231,26 @@ class Solver:
 
             localSearchIterator = localSearchIterator + 1
 
-        #self.sol = self.bestSolution
+        self.sol = self.bestSolution
 
         self.TestSolution()
         SolDrawer.draw('final_LS_8180099', self.bestSolution, self.allNodes)
 
         f = open("LocalSearch8180099.txt", "w+")
-        for i in range(len(self.bestSolution.routes)):
-            rt: Route = self.bestSolution.routes[i]
+        for i in range(len(self.sol.routes)):
+            rt: Route = self.sol.routes[i]
             f.write("This is route: \n")
             for j in range(len(rt.sequenceOfNodes)):
                 print(rt.sequenceOfNodes[j].ID, end=' ', )
                 f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
             f.write("\n")
             print("\n")
-        solution = self.objective(self.bestSolution)
+        solution = self.objective(self.sol)
         f.write("This is the final objective: %d" % (solution))
         f.close()
         print(counter)
 
-        return (self.bestSolution)
+        return (self.sol)
 
 
     def cloneRoute(self, rt: Route):
@@ -351,7 +351,7 @@ class Solver:
         
                 
     def ApplyRelocationMove(self, rm: RelocationMove):
-        oldCost = self.CalculateTotalCost(self.bestSolution)
+        oldCost = self.CalculateTotalCost(self.sol)
 
         originRt = self.bestSolution.routes[rm.originRoutePosition]
         targetRt = self.bestSolution.routes[rm.targetRoutePosition]
@@ -374,7 +374,7 @@ class Solver:
             originRt.profit -= B.profit
             targetRt.profit += B.profit
 
-        self.bestSolution.time += rm.moveCost    
+        self.sol.time += rm.moveCost    
         self.TestSolution()
 
         
