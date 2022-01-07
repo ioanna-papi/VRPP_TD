@@ -178,7 +178,7 @@ class Solver:
             total_profit += pr
         return total_profit
    
-# Ερώτημα Γ - Τελεστές τοπικής έρευνας        
+# Ερώτημα Γ - 4 Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
     def LocalSearch(self):
         self.bestSolution = self.cloneSolution(self.sol)
         terminationCondition = False
@@ -342,7 +342,61 @@ class Solver:
         return c
 
     
-    
+    def FindBestSwapMove(self, sm):
+        for firstRouteIndex in range(0, len(self.sol.routes)):
+            rt1:Route = self.sol.routes[firstRouteIndex]
+            for secondRouteIndex in range (firstRouteIndex, len(self.sol.routes)):
+                rt2:Route = self.sol.routes[secondRouteIndex]
+                for firstNodeIndex in range (1, len(rt1.sequenceOfNodes) - 1):
+                    startOfSecondNodeIndex = 1
+                    if rt1 == rt2:
+                        startOfSecondNodeIndex = firstNodeIndex + 1
+                    for secondNodeIndex in range (startOfSecondNodeIndex, len(rt2.sequenceOfNodes) - 1):
+
+                        a1 = rt1.sequenceOfNodes[firstNodeIndex - 1]
+                        b1 = rt1.sequenceOfNodes[firstNodeIndex]
+                        c1 = rt1.sequenceOfNodes[firstNodeIndex + 1]
+
+                        a2 = rt2.sequenceOfNodes[secondNodeIndex - 1]
+                        b2 = rt2.sequenceOfNodes[secondNodeIndex]
+                        c2 = rt2.sequenceOfNodes[secondNodeIndex + 1]
+
+
+
+                        moveCost = None
+                        costChangeFirstRoute = None
+                        costChangeSecondRoute = None
+
+                        if rt1 == rt2:
+                            if firstNodeIndex == secondNodeIndex - 1:
+                                costRemoved = self.distanceMatrix[a1.ID][b1.ID] + self.distanceMatrix[b1.ID][b2.ID] + self.distanceMatrix[b2.ID][c2.ID]
+                                costAdded = self.distanceMatrix[a1.ID][b2.ID] + self.distanceMatrix[b2.ID][b1.ID] + self.distanceMatrix[b1.ID][c2.ID]
+                                moveCost = costAdded - costRemoved
+                            else:
+
+                                costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.distanceMatrix[b1.ID][c1.ID]
+                                costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.distanceMatrix[b2.ID][c1.ID]
+                                costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.distanceMatrix[b2.ID][c2.ID]
+                                costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.distanceMatrix[b1.ID][c2.ID]
+                                moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                        else:
+                            if rt1.load - b1.demand + b2.demand > self.capacity:
+                                continue
+                            if rt2.load - b2.demand + b1.demand > self.capacity:
+                                continue
+
+                            costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.distanceMatrix[b1.ID][c1.ID]
+                            costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.distanceMatrix[b2.ID][c1.ID]
+                            costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.distanceMatrix[b2.ID][c2.ID]
+                            costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.distanceMatrix[b1.ID][c2.ID]
+
+                            costChangeFirstRoute = costAdded1 - costRemoved1
+                            costChangeSecondRoute = costAdded2 - costRemoved2
+
+                            moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                        if moveCost < sm.moveCost and abs(moveCost) > 0.0001:
+                            self.StoreBestSwapMove(firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, sm)
+
     
     
     
