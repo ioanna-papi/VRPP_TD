@@ -175,7 +175,7 @@ class Solver:
             print("\n")
         solution = self.objective(self.sol)
         #print(" TOTAL PROFIT =", solution)
-        f.write("This is the final objective: %d" % (solution.profit))
+        f.write("This is the final objective: %d" % (solution))
         f.close()
         SolDrawer.draw('final_Solution_8180099', self.sol, self.allNodes)
         return (self.sol)
@@ -201,7 +201,7 @@ class Solver:
             self.sol.routes[i].time = t
             total_time += t
             total_profit += pr
-        return total_profit, total_time
+        return total_profit
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
     def LocalSearch(self):
