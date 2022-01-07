@@ -292,13 +292,13 @@ class Solver:
                         if rt1 != rt2:
                             rt1time = rt1.time + originRtCostChange
                             rt2time = rt2.time + targetRtCostChange
-                            if rt1time <= 150:
+                            if rt1time > 150:
                                 continue
-                            if rt2time <= 150:
+                            if rt2time > 150:
                                 continue 
                         elif (rt1 == rt2):
                             rtfull = rt1.time + originRtCostChange + targetRtCostChange
-                            if rtfull <= 150:
+                            if rtfull > 150:
                                 continue
             
                         moveCost = costAdded - costRemoved
@@ -376,13 +376,13 @@ class Solver:
 
                         if rt1 == rt2:
                             
-                            if rt1.time <= 150:
+                            if rt1.time > 150:
                                 continue
                             if firstNodeIndex == secondNodeIndex - 1:
                                 costRemoved = self.distanceMatrix[a1.ID][b1.ID] + self.customers[b1.ID].service_time + self.distanceMatrix[b1.ID][b2.ID] + self.customers[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.customers[c2.ID].service_time
                                 costAdded = self.distanceMatrix[a1.ID][b2.ID] + self.customers[b2.ID].service_time + self.distanceMatrix[b2.ID][b1.ID] + self.customers[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.customers[c2.ID].service_time
                                 moveCost = costAdded - costRemoved
-                                if (rt1.time + moveCost) <= 150:
+                                if (rt1.time + moveCost) > 150:
                                     continue   
                                 
                             else:
@@ -396,9 +396,9 @@ class Solver:
                                 costChangeSRoute = costAdded2 - costRemoved2
                                 rttime1 = rt1.time + costChangeFRoute
                                 rttime2 = rt2.time + costChangeSRoute
-                                if rttime1 <= 150:
+                                if rttime1 > 150:
                                     continue
-                                if rttime2 <= 150:
+                                if rttime2 > 150:
                                     continue
                                     
                                 moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
@@ -414,9 +414,9 @@ class Solver:
                             costChangeSecondRoute = costAdded2 - costRemoved2
                             rttime1 = rt1.time + costChangeFirstRoute
                             rttime2 = rt2.time + costChangeSecondRoute
-                            if rttime1 <= 150:
+                            if rttime1 > 150:
                                 continue
-                            if rttime2 <= 150:
+                            if rttime2 > 150:
                                 continue
 
                             moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
