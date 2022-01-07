@@ -331,15 +331,6 @@ class Solver:
     def InitializeRm(self, rm):
         rm.Initialize()
     
-    def CalculateTotalCost(self, sol):
-        c = 0
-        for i in range (0, len(sol.routes)):
-            rt = sol.routes[i]
-            for j in range (0, len(rt.sequenceOfNodes) - 1):
-                a = rt.sequenceOfNodes[j]
-                b = rt.sequenceOfNodes[j + 1]
-                c += self.distanceMatrix[a.ID][b.ID] + self.customers[b.ID].service_time
-        return c
 
     # Swap
     def FindBestSwapMove(self, sm):
@@ -414,18 +405,83 @@ class Solver:
                             
                         if moveCost < sm.moveCost and abs(moveCost) > 0.0001:
                             self.StoreBestSwapMove(firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, sm)
+    
+    def ApplySwapMove(self, sm):
+       oldCost = self.CalculateTotalCost(self.sol)
+       rt1 = self.sol.routes[sm.positionOfFirstRoute]
+       rt2 = self.sol.routes[sm.positionOfSecondRoute]
+       b1 = rt1.sequenceOfNodes[sm.positionOfFirstNode]
+       b2 = rt2.sequenceOfNodes[sm.positionOfSecondNode]
+       rt1.sequenceOfNodes[sm.positionOfFirstNode] = b2
+       rt2.sequenceOfNodes[sm.positionOfSecondNode] = b1
 
+       if (rt1 == rt2):
+           rt1.time += sm.moveCost
+       else:
+           rt1.time += sm.costChangeFirstRt
+           rt2.time += sm.costChangeSecondRt
+           rt1.profit = rt1.profit - b1.profit + b2.profit
+           rt2.profit = rt2.profit + b1.profit - b2.profit
+
+       self.sol.time += sm.moveCost
+       self.TestSolution()
+  
+    def StoreBestSwapMove(self, firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, sm):
+        sm.positionOfFirstRoute = firstRouteIndex
+        sm.positionOfSecondRoute = secondRouteIndex
+        sm.positionOfFirstNode = firstNodeIndex
+        sm.positionOfSecondNode = secondNodeIndex
+        sm.costChangeFirstRt = costChangeFirstRoute
+        sm.costChangeSecondRt = costChangeSecondRoute
+        sm.moveCost = moveCost
+      
+    def InitializeSm(self, sm):
+        sm.Initialize()
+        
+        
+        
+        
+        
+    def CalculateTotalCost(self, sol):
+        c = 0
+        for i in range (0, len(sol.routes)):
+            rt = sol.routes[i]
+            for j in range (0, len(rt.sequenceOfNodes) - 1):
+                a = rt.sequenceOfNodes[j]
+                b = rt.sequenceOfNodes[j + 1]
+                c += self.distanceMatrix[a.ID][b.ID] + self.customers[b.ID].service_time
+        return c
     
-    
-    
-    
-    
-    
-    
-    
-    def InitializeOperators(self, rm, sm, top):
+    def ReportSolution(self, sol):
+        for i in range(0, len(sol.routes)):
+            rt = sol.routes[i]
+            for j in range (0, len(rt.sequenceOfNodes)):
+                print(rt.sequenceOfNodes[j].ID, end=' ')
+            print(rt.time)
+        print (self.sol.time)
+            
+    def TestSolution(self):
+        totalSolCost = 0
+        for r in range (0, len(self.sol.routes)):
+            rt: Route = self.sol.routes[r]
+            rtTime = 0
+            rtProfit = 0
+            for n in range (0 , len(rt.sequenceOfNodes) - 1):
+                A = rt.sequenceOfNodes[n]
+                B = rt.sequenceOfNodes[n + 1]
+                rtTime += (self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time)
+                rtProfit += A.profit
+            if abs(rtTime - rt.time) > 0.0001:
+                print ('Route Cost problem')
+                
+            totalSolCost += rt.time
+            
+        if abs(totalSolCost - self.sol.time) > 0.0001:
+            print('Solution Cost problem')
+            
+    def InitializeOperators(self, rm, sm):
         rm.Initialize()
         sm.Initialize()
-        top.Initialize()
+     
 
    
