@@ -246,90 +246,53 @@ class Solver:
         cloned.profit = self.sol.profit
         return cloned
 
+    # Relocation
     def FindBestRelocationMove(self, rm):
         for originRouteIndex in range(0, len(self.sol.routes)):
-            rt1: Route = self.sol.routes[originRouteIndex]
-            for targetRouteIndex in range(0, len(self.sol.routes)):
-                rt2: Route = self.sol.routes[targetRouteIndex]
-                for originNodeIndex in range(1, len(rt1.sequenceOfNodes)):
-                    for targetNodeIndex in range(0, len(rt2.sequenceOfNodes)):
+            rt1:Route = self.sol.routes[originRouteIndex]
+            for targetRouteIndex in range (0, len(self.sol.routes)):
+                rt2:Route = self.sol.routes[targetRouteIndex]
+                for originNodeIndex in range (1, len(rt1.sequenceOfNodes) - 1):
+                    for targetNodeIndex in range (0, len(rt2.sequenceOfNodes) - 1):
 
-                        if originRouteIndex == targetRouteIndex and (
-                                targetNodeIndex == originNodeIndex or targetNodeIndex == originNodeIndex - 1):
+                        if originRouteIndex == targetRouteIndex and (targetNodeIndex == originNodeIndex or targetNodeIndex == originNodeIndex - 1):
                             continue
 
                         A = rt1.sequenceOfNodes[originNodeIndex - 1]
                         B = rt1.sequenceOfNodes[originNodeIndex]
-                        if (rt1.sequenceOfNodes[originNodeIndex] == rt1.sequenceOfNodes[-1]):
-                            C = rt1.sequenceOfNodes[originNodeIndex]
-                        else:
-                            C = rt1.sequenceOfNodes[originNodeIndex + 1]
+                        C = rt1.sequenceOfNodes[originNodeIndex + 1]
 
                         F = rt2.sequenceOfNodes[targetNodeIndex]
-                        if (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
-                            G = rt2.sequenceOfNodes[targetNodeIndex]
-                        else:
-                            G = rt2.sequenceOfNodes[targetNodeIndex + 1]
+                        G = rt2.sequenceOfNodes[targetNodeIndex + 1]
 
+                        costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
+                        costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
 
-                        if (rt1.sequenceOfNodes[originNodeIndex] == rt1.sequenceOfNodes[-1]):
-                            if (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
-                                costAdded = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-                                costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time
-                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
-                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
-                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-                            else:
-                                costAdded = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
-                                costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
-                                originRtCostChange = - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
-                                targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
-                                originRtTimeChange = - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time
-                                targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.timeMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.timeMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
-                                                    
-
-                        elif (rt2.sequenceOfNodes[targetNodeIndex] == rt2.sequenceOfNodes[-1]):
-                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time
-                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
-                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.timeMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
-                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time
-
-                        else:
-                            costAdded = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time
-                            costRemoved = self.distanceMatrix[A.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][C.ID] + self.customers[C.ID].service_time + self.distanceMatrix[F.ID][G.ID] + self.customers[G.ID].service_time
-
-                            originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
-                            targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
-                            originRtTimeChange = self.timeMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.timeMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.timeMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
-                            targetRtTimeChange = self.timeMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.timeMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.timeMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
-
+                        originRtCostChange = self.distanceMatrix[A.ID][C.ID] + self.customers[C.ID].service_time - self.distanceMatrix[A.ID][B.ID] - self.customers[B.ID].service_time - self.distanceMatrix[B.ID][C.ID] - self.customers[C.ID].service_time
+                        targetRtCostChange = self.distanceMatrix[F.ID][B.ID] + self.customers[B.ID].service_time + self.distanceMatrix[B.ID][G.ID] + self.customers[G.ID].service_time - self.distanceMatrix[F.ID][G.ID] - self.customers[G.ID].service_time
+                        
                         if rt1 != rt2:
-                            if rt2.load + B.demand > rt2.capacity:
+                            rt1time = rt1.time + originRtCostChange
+                            rt2time = rt2.time + targetRtCostChange
+                            if rt1time <= 150:
                                 continue
-
-                        if rt1 != rt2:
-                            rt1time = rt1.time + originRtTimeChange
-                            rt2time = rt2.time + targetRtTimeChange
-                            if rt1time > 3.5:
+                            if rt2time <= 150:
                                 continue
-                            if rt2time > 3.5:
+                         elif rt1 == rt2:
+                            rtfull = rt1.time + originRtCostChange + targetRtCostChange
+                            if rtfull <= 150:
                                 continue
-                        if rt1 == rt2:
-                            rtfull = rt1.time + originRtTimeChange + targetRtTimeChange
-                            if rtfull > 3.5:
-                                continue
+                                
+                         moveCost = costAdded - costRemoved
 
-                        moveCost = costAdded - costRemoved
+                        if (moveCost < rm.moveCost) and abs(moveCost) > 0.0001:
+                            self.StoreBestRelocationMove(originRouteIndex, targetRouteIndex, originNodeIndex, targetNodeIndex, moveCost, originRtCostChange, targetRtCostChange, rm)
 
-                        if (moveCost < rm.moveCost):
-                            self.StoreBestRelocationMove(originRouteIndex, targetRouteIndex, originNodeIndex,
-                                                         targetNodeIndex, moveCost, originRtCostChange,
-                                                         targetRtCostChange,
-                                                         originRtTimeChange, targetRtTimeChange, rm)
+                        return rm.originRoutePosition
+        
 
+                            
+                            
     def ApplyRelocationMove(self, rm: RelocationMove):
 
         oldCost = self.objective(self.sol)
