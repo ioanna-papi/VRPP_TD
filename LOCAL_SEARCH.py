@@ -184,15 +184,22 @@ class Solver:
     def objective(self, solution):
         total_profit = 0
         single_profit = []
+        total_time = 0
+        single_time = []
         for i in range(len(solution.routes)):
             pr = 0
+            t = 0
             rout: Route = solution.routes[i]
             for j in range(len(rout.sequenceOfNodes) - 1):
                 index1 = rout.sequenceOfNodes[j]
                 index2 = rout.sequenceOfNodes[j + 1]
                 pr += index2.profit
+                t += (self.distanceMatrix[index1.ID][index2.ID] + self.allNodes[index2.ID].service_time)
             single_profit.append(pr)
+            single_time.append(t)
             self.sol.routes[i].profit = pr
+            self.sol.routes[i].time = t
+            total_time += t
             total_profit += pr
         return total_profit
    
