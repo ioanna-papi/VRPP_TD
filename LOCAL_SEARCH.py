@@ -1,6 +1,6 @@
 from VRP import *
 from SolutionDrawer import *
-
+# ΝΑ ΑΛΛΑΞΩ ΣΤΟ LOCAL SEARCH ΟΛΑ ΤΑ self.customers με self.allNodes
 class Solution:
     def __init__(self):
         self.profit = 0.0
