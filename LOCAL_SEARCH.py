@@ -300,8 +300,8 @@ class Solver:
                             rtfull = rt1.time + originRtCostChange + targetRtCostChange
                             if rtfull <= 150:
                                 continue
-                                
-                         moveCost = costAdded - costRemoved
+            
+                        moveCost = costAdded - costRemoved
 
                         if (moveCost < rm.moveCost) and abs(moveCost) > 0.0001:
                             self.StoreBestRelocationMove(originRouteIndex, targetRouteIndex, originNodeIndex, targetNodeIndex, moveCost, originRtCostChange, targetRtCostChange, rm)
