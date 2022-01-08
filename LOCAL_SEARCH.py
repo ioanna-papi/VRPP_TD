@@ -631,7 +631,7 @@ class Solver:
        
 # Ερώτημα Δ - Κατασκευή VND Αλγορίθμου που θα καλεί τους 4 τελεστές 
 
-     def VND(self):
+    def VND(self):
         self.bestSolution = self.cloneSolution(self.sol)
         VNDIterator = 0
         kmax = 2
