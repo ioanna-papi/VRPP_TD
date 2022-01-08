@@ -715,7 +715,7 @@ class Solver:
         
        
        
-     def ApplyMove(self, moveStructure):
+    def ApplyMove(self, moveStructure):
         if isinstance(moveStructure, RelocationMove):
             self.ApplyRelocationMove(moveStructure)
         elif isinstance(moveStructure, SwapMove):
