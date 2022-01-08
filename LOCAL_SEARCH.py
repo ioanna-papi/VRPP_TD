@@ -115,6 +115,7 @@ class Solver:
         self.sol = Solution()
         self.bestSolution = Solution()
         self.route = None
+        self.searchTrajectory = []
         
     def ApplyBestNodeMethod(self):
         for r in range(5):
