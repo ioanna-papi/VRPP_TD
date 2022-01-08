@@ -549,7 +549,7 @@ class Solver:
                                     continue
 
                             moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
-                            if moveCost < sm.moveCost and abs(moveCost) > 0.0001:
+                            if moveCost < psm.moveCost and abs(moveCost) > 0.0001:
                                 self.StoreBestProfitableSwapMove(firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, psm)
     
     
