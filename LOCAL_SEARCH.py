@@ -622,6 +622,24 @@ class Solver:
         if abs(totalSolCost - self.sol.time) > 0.0001:
             print('Solution Cost problem')
             
+    def cloneRoute(self, rt: Route):
+        cloned = Route(self.allNodes[0], rt.time_limit)
+        cloned.time = rt.time
+        cloned.profit = rt.profit
+        cloned.time_limit = rt.time_limit
+        cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
+        return cloned
+
+     def cloneSolution(self, sol: Solution):
+        cloned = Solution()
+        for i in range(0, len(sol.routes)):
+            rt = sol.routes[i]
+            clonedRoute = self.cloneRoute(rt)
+            cloned.routes.append(clonedRoute)
+        cloned.time = self.sol.time
+        cloned.profit = self.sol.profit
+        return cloned   
+        
     def InitializeOperators(self, rm, sm, im, psm):
         rm.Initialize()
         sm.Initialize()
@@ -695,35 +713,17 @@ class Solver:
         SolDrawer.draw('final_vnd', self.bestSolution, self.allNodes)
         SolDrawer.drawTrajectory(self.searchTrajectory)
         
-        def ApplyMove(self, moveStructure):
-            if isinstance(moveStructure, RelocationMove):
-                self.ApplyRelocationMove(moveStructure)
-            elif isinstance(moveStructure, SwapMove):
-                self.ApplySwapMove(moveStructure)
-            elif isinstance(moveStructure, CustomerInsertion):
-                self.ApplyCustomerInsertionAllPositions(moveStructure)
-            elif isinstance(moveStructure, ProfitableSwapMove):
-                self.ApplyProfitableSwapMove(moveStructure)
-            
-        def cloneRoute(self, rt: Route):
-            cloned = Route(self.allNodes[0], rt.time_limit)
-            cloned.time = rt.time
-            cloned.profit = rt.profit
-            cloned.time_limit = rt.time_limit
-            cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
-            return cloned
-
-        def cloneSolution(self, sol: Solution):
-            cloned = Solution()
-            for i in range(0, len(sol.routes)):
-                rt = sol.routes[i]
-                clonedRoute = self.cloneRoute(rt)
-                cloned.routes.append(clonedRoute)
-            cloned.time = self.sol.time
-            cloned.profit = self.sol.profit
-            return cloned
-    
        
+       
+     def ApplyMove(self, moveStructure):
+        if isinstance(moveStructure, RelocationMove):
+            self.ApplyRelocationMove(moveStructure)
+        elif isinstance(moveStructure, SwapMove):
+            self.ApplySwapMove(moveStructure)
+        elif isinstance(moveStructure, CustomerInsertion):
+            self.ApplyCustomerInsertionAllPositions(moveStructure)
+        elif isinstance(moveStructure, ProfitableSwapMove):
+            self.ApplyProfitableSwapMove(moveStructure)  
        
 
     
