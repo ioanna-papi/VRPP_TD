@@ -630,7 +630,7 @@ class Solver:
         cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
         return cloned
 
-     def cloneSolution(self, sol: Solution):
+    def cloneSolution(self, sol: Solution):
         cloned = Solution()
         for i in range(0, len(sol.routes)):
             rt = sol.routes[i]
