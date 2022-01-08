@@ -483,7 +483,7 @@ class Solver:
                 rt2:Route = self.sol.routes[secondRouteIndex]
                 for firstNodeIndex in range (1, len(rt1.sequenceOfNodes) - 1):
                      
-                    for secondNodeIndex in range (0, len(self.allNodes)):
+                    for secondNodeIndex in range (0, len(self.allNodes) - 1):
                         cust: Node = self.allNodes[secondNodeIndex]
                         if cust.isRouted is False:
 
