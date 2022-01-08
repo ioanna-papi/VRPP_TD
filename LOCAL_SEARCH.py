@@ -77,11 +77,6 @@ class SwapMove(object):
         self.time1 = None
         self.time2 = None
         self.moveCost = 10 ** 9
-
-#class InsertionMove(object):        
-    #def __init__(self):
-        
-    #def Initialize(self):
         
 class ProfitableSwapMove(object):
     def __init__(self):
@@ -652,8 +647,11 @@ class Solver:
         psm.positionOfSecondNode = secondNodeIndex
         psm.costChangeFirstRt = costChangeFirstRoute
         psm.costChangeSecondRt = costChangeSecondRoute
-        psm.moveCost = moveCost    
+        psm.moveCost = moveCost  
         
+    def InitializePsm(self, psm):
+        psm.Initialize()
+    
     def CalculateTotalCost(self, sol):
         c = 0
         for i in range (0, len(sol.routes)):
