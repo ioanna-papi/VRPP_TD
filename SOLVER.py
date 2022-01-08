@@ -714,8 +714,7 @@ class Solver:
         SolDrawer.draw('final_vnd', self.bestSolution, self.allNodes)
         SolDrawer.drawTrajectory(self.searchTrajectory)
         
-       
-       
+        
     def ApplyMove(self, moveStructure):
         if isinstance(moveStructure, RelocationMove):
             self.ApplyRelocationMove(moveStructure)
@@ -725,9 +724,5 @@ class Solver:
             self.ApplyCustomerInsertionAllPositions(moveStructure)
         elif isinstance(moveStructure, ProfitableSwapMove):
             self.ApplyProfitableSwapMove(moveStructure)  
-       
-
-    
-            
-
-   
+ 
+ 
