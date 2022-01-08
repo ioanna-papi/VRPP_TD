@@ -484,7 +484,7 @@ class Solver:
                 for firstNodeIndex in range (1, len(rt1.sequenceOfNodes) - 1):
                      
                     for secondNodeIndex in range (0, len(self.customers)):
-                        cust: Node = self.customers[i]
+                        cust: Node = self.customers[secondNodeIndex]
                         if cust.isRouted is False:
 
                             a1 = rt1.sequenceOfNodes[firstNodeIndex - 1]
