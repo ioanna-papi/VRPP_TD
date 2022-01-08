@@ -102,7 +102,8 @@ class ProfitableSwapMove(object):
         self.moveCost = 10 ** 9
          
 
-# Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση        
+# Ερώτημα Β - Δημιουργία κατασκευαστικού αλγορίθμου που θα παράγει ολοκληρωμένη λύση  
+
 class Solver:
     def __init__(self, m):
         self.allNodes = m.allNodes
@@ -636,12 +637,13 @@ class Solver:
         kmax = 2
         rm = RelocationMove()
         sm = SwapMove()
-        top = TwoOptMove()
+        im = CustomerInsertionAllPositions()
+        psm = ProfitableSwapMove()
         k = 0
         draw = True
 
         while k <= kmax:
-            self.InitializeOperators(rm, sm, top)
+            self.InitializeOperators(rm, sm, im, psm)
             if k == 1:
                 self.FindBestRelocationMove(rm)
                 if rm.originRoutePosition is not None and rm.moveCost < 0:
@@ -649,7 +651,7 @@ class Solver:
                     if draw:
                         SolDrawer.draw(VNDIterator, self.sol, self.allNodes)
                     VNDIterator = VNDIterator + 1
-                    self.searchTrajectory.append(self.sol.cost)
+                    self.searchTrajectory.append(self.sol.time)
                     k = 0
                 else:
                     k += 1
@@ -660,23 +662,34 @@ class Solver:
                     if draw:
                         SolDrawer.draw(VNDIterator, self.sol, self.allNodes)
                     VNDIterator = VNDIterator + 1
-                    self.searchTrajectory.append(self.sol.cost)
+                    self.searchTrajectory.append(self.sol.time)
+                    k = 0
+                else:
+                    k += 1
+            elif k == 3:
+                self.FindBestInsertionAllPositions(im)
+                if im.insertionPosition is not None and im.moveCost < 0:
+                    self.ApplyCustomerInsertionAllPositions(im)
+                    if draw:
+                        SolDrawer.draw(VNDIterator, self.sol, self.allNodes)
+                    VNDIterator = VNDIterator + 1
+                    self.searchTrajectory.append(self.sol.time)
                     k = 0
                 else:
                     k += 1
             elif k == 0:
-                self.FindBestTwoOptMove(top)
-                if top.positionOfFirstRoute is not None and top.moveCost < 0:
-                    self.ApplyTwoOptMove(top)
+                self.FindBestProfitableSwapMove(psm)
+                if psm.positionOfFirstRoute is not None and psm.moveCost < 0:
+                    self.ApplyProfitableSwapMove(psm)
                     if draw:
                         SolDrawer.draw(VNDIterator, self.sol, self.allNodes)
                     VNDIterator = VNDIterator + 1
-                    self.searchTrajectory.append(self.sol.cost)
+                    self.searchTrajectory.append(self.sol.time)
                     k = 0
                 else:
                     k += 1
-
-            if (self.sol.cost < self.bestSolution.cost):
+                    
+            if (self.sol.time < self.bestSolution.time):
                 self.bestSolution = self.cloneSolution(self.sol)
 
         SolDrawer.draw('final_vnd', self.bestSolution, self.allNodes)
@@ -687,9 +700,10 @@ class Solver:
                 self.ApplyRelocationMove(moveStructure)
             elif isinstance(moveStructure, SwapMove):
                 self.ApplySwapMove(moveStructure)
-            elif isinstance(moveStructure, TwoOptMove):
-                self.ApplyTwoOptMove(moveStructure)
-            
+            elif isinstance(moveStructure, CustomerInsertion):
+                self.ApplyCustomerInsertionAllPositions(moveStructure)
+            elif isinstance(moveStructure, ProfitableSwapMove):
+                self.ApplyProfitableSwapMove(moveStructure)
             
         def cloneRoute(self, rt: Route):
             cloned = Route(self.allNodes[0], rt.time_limit)
