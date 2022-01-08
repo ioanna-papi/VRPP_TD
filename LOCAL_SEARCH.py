@@ -533,7 +533,7 @@ class Solver:
                                 moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
                                  
                          
-                           else:
+                            else:
                                 costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c1.ID] + self.allNodes[c1.ID].service_time
                                 costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c1.ID] + self.allNodes[c1.ID].service_time
                                 costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
