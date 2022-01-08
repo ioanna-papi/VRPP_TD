@@ -689,9 +689,10 @@ class Solver:
         if abs(totalSolCost - self.sol.time) > 0.0001:
             print('Solution Cost problem')
             
-    def InitializeOperators(self, rm, sm):
+    def InitializeOperators(self, rm, sm, im, psm):
         rm.Initialize()
         sm.Initialize()
-     
+        im.Initialize()
+        psm.Initialize()
 
    
