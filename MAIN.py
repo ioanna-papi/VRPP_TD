@@ -9,4 +9,7 @@ s = Solver(m)
 solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
 
-
+# 3ο και 4ο ερώτημα
+#print("VND")
+#solution2 = s.VND()
+#print(s.objective(solution2))
