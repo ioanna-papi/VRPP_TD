@@ -514,23 +514,23 @@ class Solver:
                                     if (rt1.time + moveCost) > 150:
                                         continue   
                                 
-                            else:
+                                else:
 
-                                costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c1.ID] + self.allNodes[c1.ID].service_time
-                                costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c1.ID] + self.allNodes[c1.ID].service_time
-                                costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
-                                costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                    costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                    costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                    costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                    costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.allNodes[c2.ID].service_time
                                 
-                                costChangeFRoute = costAdded1 - costRemoved1
-                                costChangeSRoute = costAdded2 - costRemoved2
-                                rttime1 = rt1.time + costChangeFRoute
-                                rttime2 = rt2.time + costChangeSRoute
-                                if rttime1 > 150:
-                                    continue
-                                if rttime2 > 150:
-                                    continue
+                                    costChangeFRoute = costAdded1 - costRemoved1
+                                    costChangeSRoute = costAdded2 - costRemoved2
+                                    rttime1 = rt1.time + costChangeFRoute
+                                    rttime2 = rt2.time + costChangeSRoute
+                                    if rttime1 > 150:
+                                        continue
+                                    if rttime2 > 150:
+                                        continue
                                     
-                                moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                                    moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
                                  
                          
                             else:
