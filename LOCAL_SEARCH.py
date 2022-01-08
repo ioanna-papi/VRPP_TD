@@ -219,6 +219,7 @@ class Solver:
         rm = RelocationMove()
         sm = SwapMove()
         im = CustomerInsertionAllPositions()
+        psm = ProfitableSwapMove()
         localSearchIterator = 0
         
         while terminationCondition is False:
@@ -517,7 +518,7 @@ class Solver:
                         lastNodePresentInTheRoute = rt.sequenceOfNodes[-2]
                         for j in range(0, len(rt1.sequenceOfNodes) - 1):
                             A = rt1.sequenceOfNodes[j]
-                            B = rt1.sequenceOfNodes[j + 1]
+                            B = rt1.sequenceOfNodes[j + 1] 
                             costAdded = self.distanceMatrix[A.ID][candidateCust.ID] + allNodes[candidateCust.ID].service_time + self.distanceMatrix[candidateCust.ID][B.ID] + allNodes[B.ID].service_time
                             costRemoved = self.distanceMatrix[A.ID][B.ID] + allNodes[B.ID].service_time
                             moveCost = costAdded - costRemoved
@@ -526,6 +527,7 @@ class Solver:
                                 im.customer = candidateCust
                                 im.route = rt
                                 im.time = moveCost
+                                im.profit = candidateCust.profit
                                 im.insertionPosition = j
         
         
@@ -535,14 +537,123 @@ class Solver:
         # before the second depot occurrence
         insIndex = im.insertionPosition
         rt.sequenceOfNodes.insert(insIndex + 1, insCustomer)
-        rt.time += insertion.time
-        self.sol.time += insertion.time
+        rt.time += im.time
+        self.sol.time += im.time
         rt.profit += insCustomer.profit
-        self.sol.profit += insertion.profit
+        self.sol.profit += insCustomer.profit
         insCustomer.isRouted = True
     
     
+    def InitializeIm(self, im):
+        im.Initialize()
     
+    # Profitable Swap
+    def FindBestProfitableSwapMove(self, psm):
+        for firstRouteIndex in range(0, len(self.sol.routes)):
+            rt1:Route = self.sol.routes[firstRouteIndex]
+            for secondRouteIndex in range (firstRouteIndex, len(self.sol.routes)):
+                rt2:Route = self.sol.routes[secondRouteIndex]
+                for firstNodeIndex in range (1, len(rt1.sequenceOfNodes) - 1):
+                     
+                    for secondNodeIndex in range (0, len(self.customers)):
+                        cust: Node = self.customers[i]
+                        if cust.isRouted is False:
+
+                            a1 = rt1.sequenceOfNodes[firstNodeIndex - 1]
+                            b1 = rt1.sequenceOfNodes[firstNodeIndex]
+                            c1 = rt1.sequenceOfNodes[firstNodeIndex + 1]
+
+                            a2 = self.allNodes[cust.ID - 1]
+                            b2 = self.allNodes[cust.ID]
+                            c2 = self.allNodes[cust.ID + 1]
+
+                            moveCost = None
+                            costChangeFirstRoute = None
+                            costChangeSecondRoute = None
+
+                            moveCost = None
+                            costChangeFirstRoute = None
+                            costChangeSecondRoute = None
+
+                            if rt1 == rt2:
+                            
+                                if rt1.time > 150:
+                                    continue
+                                if firstNodeIndex == secondNodeIndex - 1:
+                                    costRemoved = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                    costAdded = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                    moveCost = costAdded - costRemoved
+                                    if (rt1.time + moveCost) > 150:
+                                        continue   
+                                
+                            else:
+
+                                costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                
+                                costChangeFRoute = costAdded1 - costRemoved1
+                                costChangeSRoute = costAdded2 - costRemoved2
+                                rttime1 = rt1.time + costChangeFRoute
+                                rttime2 = rt2.time + costChangeSRoute
+                                if rttime1 > 150:
+                                    continue
+                                if rttime2 > 150:
+                                    continue
+                                    
+                                moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                                 
+                         
+                           else:
+                                costRemoved1 = self.distanceMatrix[a1.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                costAdded1 = self.distanceMatrix[a1.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c1.ID] + self.allNodes[c1.ID].service_time
+                                costRemoved2 = self.distanceMatrix[a2.ID][b2.ID] + self.allNodes[b2.ID].service_time + self.distanceMatrix[b2.ID][c2.ID] + self.allNodes[c2.ID].service_time
+                                costAdded2 = self.distanceMatrix[a2.ID][b1.ID] + self.allNodes[b1.ID].service_time + self.distanceMatrix[b1.ID][c2.ID] + self.allNodes[c2.ID].service_time
+
+                                costChangeFirstRoute = costAdded1 - costRemoved1
+                                costChangeSecondRoute = costAdded2 - costRemoved2
+                                rttime1 = rt1.time + costChangeFirstRoute
+                                rttime2 = rt2.time + costChangeSecondRoute
+                                if rttime1 > 150:
+                                    continue
+                                if rttime2 > 150:
+                                    continue
+
+                            moveCost = costAdded1 + costAdded2 - (costRemoved1 + costRemoved2)
+                            if moveCost < sm.moveCost and abs(moveCost) > 0.0001:
+                                self.StoreBestProfitableSwapMove(firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, psm)
+    
+    
+    def ApplyProfitableSwapMove(self, psm):
+       oldCost = self.CalculateTotalCost(self.sol)
+       rt1 = self.sol.routes[psm.positionOfFirstRoute]
+       rt2 = self.sol.routes[psm.positionOfSecondRoute]
+       b1 = rt1.sequenceOfNodes[psm.positionOfFirstNode]
+       b2 = self.allNodes[psm.positionOfSecondNode]
+       rt1.sequenceOfNodes[psm.positionOfFirstNode] = b2
+       self.allNodes[psm.positionOfSecondNode] = b1
+
+       if (rt1 == rt2):
+           rt1.time += psm.moveCost
+       else:
+           rt1.time += psm.costChangeFirstRt
+           rt2.time += psm.costChangeSecondRt
+           rt1.profit = rt1.profit - b1.profit + b2.profit
+           rt2.profit = rt2.profit + b1.profit - b2.profit
+
+       self.sol.time += psm.moveCost
+       self.TestSolution()
+        
+    def StoreBestProfitableSwapMove(self, firstRouteIndex, secondRouteIndex, firstNodeIndex, secondNodeIndex, moveCost, costChangeFirstRoute, costChangeSecondRoute, psm):
+        psm.positionOfFirstRoute = firstRouteIndex
+        psm.positionOfSecondRoute = secondRouteIndex
+        psm.positionOfFirstNode = firstNodeIndex
+        psm.positionOfSecondNode = secondNodeIndex
+        psm.costChangeFirstRt = costChangeFirstRoute
+        psm.costChangeSecondRt = costChangeSecondRoute
+        psm.moveCost = moveCost    
+        
     def CalculateTotalCost(self, sol):
         c = 0
         for i in range (0, len(sol.routes)):
