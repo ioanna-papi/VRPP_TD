@@ -207,74 +207,6 @@ class Solver:
         return total_profit
    
 # Ερώτημα Γ - Τελεστές τοπικής έρευνας (Relocation / Swap / Insertion / Profitable Swap)       
-    def LocalSearch(self):
-        self.bestSolution = self.cloneSolution(self.sol)
-        terminationCondition = False
-        counter = 0
-        rm = RelocationMove()
-        sm = SwapMove()
-        im = CustomerInsertionAllPositions()
-        psm = ProfitableSwapMove()
-        localSearchIterator = 0
-        
-        while terminationCondition is False:
-
-            # SolDrawer.draw(localSearchIterator, self.sol, self.allNodes)
-            self.InitializeRm(rm)
-            self.FindBestRelocationMove(rm)
-            if rm.originRoutePosition is not None:
-                if rm.moveCost < 0:
-                    self.ApplyRelocationMove(rm)
-                    counter += 1
-                else:
-                    terminationCondition = True
-
-            self.TestSolution()
-
-            if (self.sol.time < self.bestSolution.time):
-                self.bestSolution = self.cloneSolution(self.sol)
-
-            localSearchIterator = localSearchIterator + 1
-
-        self.sol = self.bestSolution
-
-        self.TestSolution()
-        SolDrawer.draw('final_LS_8180099', self.bestSolution, self.allNodes)
-
-        f = open("LocalSearch8180099.txt", "w+")
-        for i in range(len(self.sol.routes)):
-            rt: Route = self.sol.routes[i]
-            f.write("This is route: \n")
-            for j in range(len(rt.sequenceOfNodes)):
-                print(rt.sequenceOfNodes[j].ID, end=' ', )
-                f.write("%d\n" % (rt.sequenceOfNodes[j].ID))
-            f.write("\n")
-            print("\n")
-        solution = self.objective(self.sol)
-        f.write("This is the final objective: %d" % (solution))
-        f.close()
-        print(counter)
-
-        return (self.sol)
-
-
-    def cloneRoute(self, rt: Route):
-        cloned = Route(self.allNodes[0], rt.time_limit)
-        cloned.time = rt.time
-        cloned.profit = rt.profit
-        cloned.time_limit = rt.time_limit
-        cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
-        return cloned
-
-    def cloneSolution(self, sol: Solution):
-        cloned = Solution()
-        for i in range(0, len(sol.routes)):
-            rt = sol.routes[i]
-            clonedRoute = self.cloneRoute(rt)
-            cloned.routes.append(clonedRoute)
-        cloned.time = self.sol.time
-        cloned.profit = self.sol.profit
-        return cloned
 
     # Relocation
     def FindBestRelocationMove(self, rm):
@@ -751,13 +683,36 @@ class Solver:
         SolDrawer.drawTrajectory(self.searchTrajectory)
         
         def ApplyMove(self, moveStructure):
-        if isinstance(moveStructure, RelocationMove):
-            self.ApplyRelocationMove(moveStructure)
-        elif isinstance(moveStructure, SwapMove):
-            self.ApplySwapMove(moveStructure)
-        elif isinstance(moveStructure, TwoOptMove):
-            self.ApplyTwoOptMove(moveStructure)
+            if isinstance(moveStructure, RelocationMove):
+                self.ApplyRelocationMove(moveStructure)
+            elif isinstance(moveStructure, SwapMove):
+                self.ApplySwapMove(moveStructure)
+            elif isinstance(moveStructure, TwoOptMove):
+                self.ApplyTwoOptMove(moveStructure)
             
+            
+        def cloneRoute(self, rt: Route):
+            cloned = Route(self.allNodes[0], rt.time_limit)
+            cloned.time = rt.time
+            cloned.profit = rt.profit
+            cloned.time_limit = rt.time_limit
+            cloned.sequenceOfNodes = rt.sequenceOfNodes.copy()
+            return cloned
+
+        def cloneSolution(self, sol: Solution):
+            cloned = Solution()
+            for i in range(0, len(sol.routes)):
+                rt = sol.routes[i]
+                clonedRoute = self.cloneRoute(rt)
+                cloned.routes.append(clonedRoute)
+            cloned.time = self.sol.time
+            cloned.profit = self.sol.profit
+            return cloned
+    
+       
+       
+
+    
             
 
    
