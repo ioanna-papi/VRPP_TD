@@ -1,11 +1,11 @@
-from LOCAL_SEARCH import *
+from LS import *
 
 # 1ο Ερώτημα
 m = Model()
 m.BuildModel()
 
 # 2ο Ερώτημα
-s = Solver(m)
+s = Solver2(m)
 solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
 
