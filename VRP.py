@@ -1,8 +1,6 @@
 import random
 import math
 
-# Ερώτημα Α - Αναπαράσταση προβλήματος
-
 class Model:
     def __init__(self):
         self.allNodes = []
