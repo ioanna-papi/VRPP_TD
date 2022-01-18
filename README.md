@@ -17,5 +17,5 @@ The time of each route (time of transitions and time of customer service) can no
 The purpose of the problem is to design 𝑘 routes that will maximize overall profit. Obviously, due to the limitations of the maximum time limit, it is not necessary that everyone will be covered customers. Instead, the selected customers must be selected and routed. 
 
 # How to run the code:
-                 python MAIN.py
+   python MAIN.py
 
