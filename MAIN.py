@@ -1,15 +1,12 @@
 from SOLVER import *
 
-# 1ο Ερώτημα
+# 1st task
 m = Model()
 m.BuildModel()
 
-# 2ο Ερώτημα
+# 2nd task
 s = Solver(m)
 solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
 
-# 3ο και 4ο ερώτημα
-#print("VND")
-#solution2 = s.VND()
-#print(s.objective(solution2))
+
