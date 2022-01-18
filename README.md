@@ -12,7 +12,7 @@ A fleet of 𝑘 = 5 trucks is located in the central warehouse.
 The vehicles start at the warehouse, serve customers and return to the main warehouse.
 Each car performs one route.
 Each customer can be covered (not necessarily as it will be covered) by a single vehicle visit. In this case, the customer returns his profit.
-The time of each route (time of transitions and time of customer service) can not exceed a period of time 𝑇 = 150.
+The time of each route (time of transitions and time of customer service) can not exceed a time limit 𝑇 = 150.
 
 The purpose of the problem is to design 𝑘 routes that will maximize overall profit. Obviously, due to the limitations of the maximum time limit, it is not necessary that everyone will be covered customers. Instead, the selected customers must be selected and routed. 
 
