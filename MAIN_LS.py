@@ -10,6 +10,10 @@ solution = s.ApplyBestNodeMethod()
 print(" TOTAL PROFIT =", s.objective(solution))
 
 # 3ο και 4ο ερώτημα
-print("VND")
-solution3 = s.VND()
-print(s.objective(solution3))
+#print("VND")
+#solution3 = s.VND()
+#print(s.objective(solution3))
+
+s.LocalSearch()
+s.ReportSolution(s.solution)
+print("Total routes (after local search): ", len(s.solution.routes))
