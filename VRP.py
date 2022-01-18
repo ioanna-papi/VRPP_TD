@@ -11,7 +11,7 @@ class Model:
         all_nodes = []
         d = Node(0, 50, 50, 0, 0)
         all_nodes.append(d)
-        # birthday = 03/11/2000
+        # my birthday = 03/11/2000
         birthday = 3112000
         random.seed(birthday)
         total_route_time = 0
