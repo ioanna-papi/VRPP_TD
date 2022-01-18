@@ -16,49 +16,4 @@ The time of each route (time of transitions and time of customer service) can no
 
 The purpose of the problem is to design 𝑘 routes that will maximize overall profit. Obviously, due to the limitations of the maximum time limit, it is not necessary that everyone will be covered customers. Instead, the selected customers must be selected and routed. 
 
-Α. Γράψτε σε python τις κλάσεις, πίνακες και γενικότερα την απαιτούμενη υποδομή για αναπαρασταθεί το 
-πρόβλημα (3).
-Οι κόμβοι αποθήκη και πελάτες να δημιουργούνται και να φυλάσσονται όπως φαίνεται στον παρακάτω 
-κώδικα:
 
-all_nodes = [] 
-
-d = Node(0, 50, 50, 0, 0) 
-
-all_nodes.append(d) 
-
-birthday = 3112000 
-
-random.seed(birthday)
-
-for i in range(0, 200): 
-
- xx = random.randint(0, 100) 
- 
- yy = random.randint(0, 100) 
- 
- service_time = random.randint(5, 10)
- 
- profit = random.randint(5, 20) 
- 
- cust = Node(i+1, xx, yy, service_time, profit) 
- 
- all_nodes.append(cust)
- 
- όπου birthday η ημέρα γενεθλίων του αρχηγού της ομάδας. 
-
-Β. Φτιάξτε έναν κατασκευαστικό αλγόριθμο ο οποίος θα σχηματίζει μία ολοκληρωμένη λύση (3). 
-
-Γ. Γράψτε σε Python τέσσερεις τελεστές τοπικής έρευνας (3) 
-  1. Relocate: Επανατοποθέτηση κάθε καλυπτόμενου πελάτη σε οποιοδήποτε διαφορετικό σημείο 
-  της λύσης. 
-  2. Swap: Αντιμετάθεση των θέσεων εξυπηρέτησης οποιουδήποτε ζεύγους καλυπτόμενων 
-  πελατών. 
-  3. Insertion: Εισαγωγή ενός οποιουδήποτε μη καλυπτόμενου πελάτη σε οποιοδήποτε σημείο της 
-  λύσης. 
-  4. Profitable Swap: Αντικατάσταση οποιουδήποτε καλυπτόμενου πελάτη με οποιονδήποτε μη 
-  καλυπτόμενο πελάτη. 
-  
-Δ. Γράψτε σε Python μία VND μέθοδο η οποία θα χρησιμοποιεί τους τελεστές του ερωτήματος (Γ) και θα 
-βελτιώνει τη λύση του ερωτήματος (Β). Ποια είναι η τελική λύση. Ποιο το κόστος της και μετά από πόσες 
-επαναλήψεις του αλγορίθμου δημιουργήθηκε (1);
