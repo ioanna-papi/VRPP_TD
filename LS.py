@@ -348,7 +348,19 @@ class Solver2:
                 print(rt.sequenceOfNodes[j].ID, end=' ')
             print(rt.time)
         print (self.sol.time)
-            
+        
+        
+    def ReportSolution(self, sol):
+        print(self.sol.dist)
+        for i in range(0, len(sol.routes)):
+            rt = sol.routes[i]
+            for j in range(0, len(rt.sequenceOfNodes)):
+                print(rt.sequenceOfNodes[j].id, end=' ')
+            print("")
+    
+    
+    
+    
     def TestSolution(self):
         totalSolCost = 0
         for r in range (0, len(self.sol.routes)):
