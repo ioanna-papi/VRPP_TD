@@ -1,11 +1,11 @@
-#Problem Decription
+# Problem Decription
 
 The capacitated vehicle routing problem (CVRP or simply VRP) is one of the 
 most studied combinatorial optimization problems in the literature of operations 
 research. The main reason for this much attention is the abundance of its real-life 
 applications in distribution logistics and transportation. 
 
-In this project we focus on the single-depot capacitated VRP with profits and time deadlines (VRPPTD).VRPP-TD is a generalization of the VRP where visiting each customer incurs a fixed revenue, and it is not necessary to visit all customers. The objective is to find the number and routes of vehicles under time deadline restrictions so as to maximize the total profit, which is equal to the total revenue collected from the visited customers less the traveling cost. 
+In this project we focus on the single-depot capacitated VRP with profits and time deadlines (VRP-TD).VRPP-TD is a generalization of the VRP where visiting each customer incurs a fixed revenue, and it is not necessary to visit all customers. The objective is to find the number and routes of vehicles under time deadline restrictions so as to maximize the total profit, which is equal to the total revenue collected from the visited customers less the traveling cost. 
 
 Θεωρήστε μία κεντρική αποθήκη (Κόμβος με id: 0) και ένα σύνολο 𝑛 = 200 πελατών (Κόμβοι με id: 1,…,𝑛=200).
 
