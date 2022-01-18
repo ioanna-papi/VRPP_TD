@@ -54,5 +54,4 @@ class Route:
         self.time = 0
         self.profit = 0
       
-        
-        
+    
