@@ -18,3 +18,4 @@ The purpose of the problem is to design 𝑘 routes that will maximize overall p
 
 How to run the code:
 python MAIN.py
+python count_fixed_polyominoes.py [-p] <n>
