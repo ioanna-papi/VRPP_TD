@@ -86,6 +86,7 @@ class Solver:
         #print(" TOTAL PROFIT =", solution)
         f.write("This is the final objective: %d" % (solution))
         f.close()
+        # draw the solution
         SolDrawer.draw('final_Solution_8180099', self.sol, self.allNodes)
         return (self.sol)
 
