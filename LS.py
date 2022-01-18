@@ -427,7 +427,7 @@ class Solver2:
                     self.ApplyRelocationMove(rm)
                 else:
                     terminationCondition = True
-            if (self.sol.dist < self.bestSolution.dist):
+            if (self.sol.moveCost < self.bestSolution.moveCost):
                 self.CalculateRoutes()
                 self.bestSolution = self.cloneSolution(self.sol)
         for rt in self.bestSolution.routes:
