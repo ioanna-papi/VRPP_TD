@@ -1,4 +1,4 @@
-from SOLVER import *
+from Solver import *
 
 m = Model()
 m.BuildModel()
